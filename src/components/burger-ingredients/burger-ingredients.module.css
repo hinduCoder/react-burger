@@ -1,0 +1,33 @@
+.ingredients_section {
+    composes: cool-scrollbar from global;
+    overflow-y: auto;
+    position: relative;
+}
+
+.ingredient_card {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    height: 208px;
+    align-items: center;
+    position: relative;
+}
+
+.ingredient_card img {
+    width: 240px;
+    height: 120px;
+}
+
+.ingredient_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+    column-gap: 24px;
+    padding-left: 0;
+    width: 600px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: stretch;
+}

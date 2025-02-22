@@ -1,0 +1,26 @@
+.burger_constructor {
+    padding-left: 16px;
+    
+    width: 600px;
+    box-sizing: border-box;
+    padding-top: 100px;
+    
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.list {
+    composes: cool-scrollbar from global;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    gap: 16px;
+    overflow-y: auto;
+}
+
+.list > li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+

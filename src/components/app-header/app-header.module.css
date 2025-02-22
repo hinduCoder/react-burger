@@ -1,0 +1,28 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+}
+
+.left_menu {
+    display: flex;
+    gap: 8px;
+}
+
+.left_menu > div {
+    display: flex;
+    cursor: pointer;
+}
+
+.right_menu {
+    display: flex;
+}
+.right_menu > div {
+    cursor: pointer;
+    display: flex;
+}
+
+.logo {
+    position: absolute;
+}
