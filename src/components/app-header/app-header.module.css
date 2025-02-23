@@ -10,7 +10,7 @@
     gap: 8px;
 }
 
-.menu > div {
+.menu > a {
     display: flex;
     cursor: pointer;
     gap: 8px;
