@@ -1,9 +1,9 @@
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-constructor.module.css'
-import data from '../../utils/data'
+import dataType from '../../utils/data.proptypes'
+import PropTypes from "prop-types";
 
-const BurgerConstructor = () => {
-    const bun = data.find(item => item.type === 'bun');   
+const BurgerConstructor = ({ bun, fillings }) => {
     return <section className={styles.burger_constructor}>
         <ConstructorElement
             extraClass="ml-8"
@@ -14,7 +14,7 @@ const BurgerConstructor = () => {
             isLocked={true}
         />
         <ul className={styles.list}>
-            {data.filter(item => item.type !== 'bun').map(item => <li key={item._id}>
+            {fillings.map(item => <li key={item._id}>
                 <DragIcon type="primary"/>
                 <ConstructorElement
                     text={item.name}
@@ -37,6 +37,11 @@ const BurgerConstructor = () => {
             <Button htmlType="button" type="primary" size="large" extraClass="ml-10">Оформить заказ</Button>
         </div>
     </section>
+}
+
+BurgerConstructor.propTypes = {
+    bun: dataType,
+    fillings: PropTypes.arrayOf(dataType)
 }
 
 export default BurgerConstructor;
