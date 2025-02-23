@@ -10,7 +10,7 @@
 }
 
 .list {
-    composes: cool-scrollbar from global;
+    composes: cool-scrollbar from '../../styles/scrollbar.module.css';
     display: flex;
     flex-direction: column;
     padding-left: 0;

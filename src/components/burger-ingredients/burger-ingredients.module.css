@@ -4,7 +4,7 @@
 }
 
 .ingredients_list {
-    composes: cool-scrollbar from global;
+    composes: cool-scrollbar from '../../styles/scrollbar.module.css';
     overflow-y: auto;
     margin-top: 40px;
 }

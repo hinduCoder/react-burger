@@ -1,3 +1,7 @@
+:global(:root) {
+    scrollbar-color: unset !important;
+}
+
 .app {
   text-align: center;
   height: 100vh;
