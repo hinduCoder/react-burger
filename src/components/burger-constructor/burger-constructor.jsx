@@ -3,7 +3,7 @@ import styles from './burger-constructor.module.css'
 import data from '../../utils/data'
 
 const BurgerConstructor = () => {
-    const bun = data.find(item => item.name.includes('Краторная булка'));   
+    const bun = data.find(item => item.type === 'bun');   
     return <section className={styles.burger_constructor}>
         <ConstructorElement
             extraClass="ml-8"
@@ -14,7 +14,7 @@ const BurgerConstructor = () => {
             isLocked={true}
         />
         <ul className={styles.list}>
-            {data.map((item) => <li key={item._id}>
+            {data.filter(item => item.type !== 'bun').map(item => <li key={item._id}>
                 <DragIcon type="primary"/>
                 <ConstructorElement
                     text={item.name}

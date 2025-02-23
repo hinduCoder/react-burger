@@ -1,8 +1,10 @@
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import data from '../../utils/data'
 import styles from './burger-ingredients.module.css'
 import { useState } from "react";
-const BurgerIngredients = () => {
+import dataType from '../../utils/data.proptypes'
+import PropTypes from "prop-types";
+
+const BurgerIngredients = ({ ingredients }) => {
     const [selectedIngredientType, setSelectedIngredientType] = useState('bun');
     const ingredientTypes = [
         { type: 'bun', label: 'Булки' },
@@ -12,7 +14,7 @@ const BurgerIngredients = () => {
     
     const ingredientTypeItemsMap = new Map();
     ingredientTypes.forEach(ingredientType => ingredientTypeItemsMap.set(ingredientType.type, []));
-    data.forEach(item => ingredientTypeItemsMap.get(item.type).push(item));
+    ingredients.forEach(item => ingredientTypeItemsMap.get(item.type).push(item));
     
     return <section className={styles.ingredients_section}>
         <h1 className="text text_type_main-large" style={{textAlign: 'left'}}>Соберите бургер</h1>
@@ -30,7 +32,7 @@ const BurgerIngredients = () => {
             {ingredientTypes.map(ingredientType => <>
                 <h2 style={{textAlign: 'left'}} className="text text_type_main-medium">{ingredientType.label}</h2>
                 <ul className={styles.ingredient_grid}>
-                    {data
+                    {ingredients
                         .map(ingredient =>
                             <li key={ingredient._id} className={styles.ingredient_card}>
                                 {ingredient.count && <Counter count={ingredient.count}/>}
@@ -46,6 +48,10 @@ const BurgerIngredients = () => {
         </section>
 
     </section>
+}
+
+BurgerIngredients.propTypes = {
+    ingredients: PropTypes.arrayOf(dataType)
 }
 
 export default BurgerIngredients;

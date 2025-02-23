@@ -12,6 +12,7 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.2",
+    "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
@@ -41,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/prop-types": "^15.7.14"
   }
 }
