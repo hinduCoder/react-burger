@@ -3,6 +3,12 @@
     grid-template-rows: auto auto 1fr;
 }
 
+.ingredients_list {
+    composes: cool-scrollbar from global;
+    overflow-y: auto;
+    margin-top: 40px;
+}
+
 .ingredient_card {
     display: flex;
     flex-direction: column;
@@ -17,14 +23,12 @@
 }
 
 .ingredient_grid {
-    composes: cool-scrollbar from global;
     display: grid;
     grid-template-columns: 1fr 1fr;
     row-gap: 32px;
     column-gap: 24px;
     padding-left: 0;
     width: 600px;
-    overflow-y: auto;
 }
 
 .tabs {
