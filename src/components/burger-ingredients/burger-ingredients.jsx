@@ -34,7 +34,7 @@ const BurgerIngredients = () => {
                         .map(ingredient =>
                             <li key={ingredient._id} className={styles.ingredient_card}>
                                 {ingredient.count && <Counter count={ingredient.count}/>}
-                                <img alt={ingredient.name} src={ingredient.image} className="ml-4 mr-4"/>
+                                <img alt={`Ингредиент для бургера: ${ingredient.name}`} src={ingredient.image} className="ml-4 mr-4"/>
                                 <div>
                                     <span className="text text_type_digits-default">{ingredient.price} </span>
                                     <CurrencyIcon type="primary"/>
