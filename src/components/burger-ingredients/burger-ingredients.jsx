@@ -1,8 +1,9 @@
-import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
 import { useState } from "react";
 import dataType from '../../utils/data.proptypes'
 import PropTypes from "prop-types";
+import IngredientCard from "../ingredient-card/ingredient-card";
 
 const BurgerIngredients = ({ ingredients }) => {
     const [selectedIngredientType, setSelectedIngredientType] = useState('bun');
@@ -34,14 +35,8 @@ const BurgerIngredients = ({ ingredients }) => {
                 <ul className={styles.ingredient_grid}>
                     {ingredients
                         .map(ingredient =>
-                            <li key={ingredient._id} className={styles.ingredient_card}>
-                                {ingredient.count && <Counter count={ingredient.count}/>}
-                                <img alt={`Ингредиент для бургера: ${ingredient.name}`} src={ingredient.image} className="ml-4 mr-4"/>
-                                <div>
-                                    <span className="text text_type_digits-default">{ingredient.price} </span>
-                                    <CurrencyIcon type="primary"/>
-                                </div>
-                                <div className="text text_type_main-default">{ingredient.name}</div>
+                            <li key={ingredient._id} className={styles.ingredient_card_wrapper}>
+                                <IngredientCard {...ingredient}></IngredientCard>
                             </li>)}
                 </ul>
         </>)}

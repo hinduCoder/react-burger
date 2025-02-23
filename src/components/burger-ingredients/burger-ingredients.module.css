@@ -9,17 +9,8 @@
     margin-top: 40px;
 }
 
-.ingredient_card {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    height: 208px;
-    align-items: center;
-}
-
-.ingredient_card img {
-    width: 240px;
-    height: 120px;
+.ingredient_card_wrapper {
+    display: block;
 }
 
 .ingredient_grid {
