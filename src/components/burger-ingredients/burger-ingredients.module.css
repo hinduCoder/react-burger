@@ -1,7 +1,6 @@
 .ingredients_section {
-    composes: cool-scrollbar from global;
-    overflow-y: auto;
-    position: relative;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
 }
 
 .ingredient_card {
@@ -10,7 +9,6 @@
     gap: 1px;
     height: 208px;
     align-items: center;
-    position: relative;
 }
 
 .ingredient_card img {
@@ -19,12 +17,14 @@
 }
 
 .ingredient_grid {
+    composes: cool-scrollbar from global;
     display: grid;
     grid-template-columns: 1fr 1fr;
     row-gap: 32px;
     column-gap: 24px;
     padding-left: 0;
     width: 600px;
+    overflow-y: auto;
 }
 
 .tabs {
