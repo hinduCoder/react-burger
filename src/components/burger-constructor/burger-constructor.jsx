@@ -1,4 +1,4 @@
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-constructor.module.css'
 import data from '../../utils/data'
 
@@ -23,14 +23,19 @@ const BurgerConstructor = () => {
                 />
             </li>)}
         </ul>
-            <ConstructorElement
-                extraClass="ml-8"
-                text={`${bun.name} (низ)`}
-                thumbnail={bun.image_mobile}
-                price={bun.price}
-                type="bottom"
-                isLocked={true}
-            />
+        <ConstructorElement
+            extraClass="ml-8"
+            text={`${bun.name} (низ)`}
+            thumbnail={bun.image_mobile}
+            price={bun.price}
+            type="bottom"
+            isLocked={true}
+        />
+        <div className={styles.total}>
+            <span className="text text_type_digits-medium">610 <CurrencyIcon type="primary" className={styles.total_currency_icon}/>
+            </span>
+            <Button htmlType="button" type="primary" size="large" extraClass="ml-10">Оформить заказ</Button>
+        </div>
     </section>
 }
 
