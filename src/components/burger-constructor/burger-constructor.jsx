@@ -3,7 +3,7 @@ import styles from './burger-constructor.module.css'
 import data from '../../utils/data'
 
 const BurgerConstructor = () => {
-    const bun = data.find(x => x.name.includes('Краторная булка'));   
+    const bun = data.find(item => item.name.includes('Краторная булка'));   
     return <section className={styles.burger_constructor}>
         <ConstructorElement
             extraClass="ml-8"
@@ -14,12 +14,12 @@ const BurgerConstructor = () => {
             isLocked={true}
         />
         <ul className={styles.list}>
-            {data.map((x, i) => <li key={x._id}>
+            {data.map((item) => <li key={item._id}>
                 <DragIcon type="primary"/>
                 <ConstructorElement
-                    text={x.name}
-                    thumbnail={x.image_mobile}
-                    price={x.price}
+                    text={item.name}
+                    thumbnail={item.image_mobile}
+                    price={item.price}
                 />
             </li>)}
         </ul>
