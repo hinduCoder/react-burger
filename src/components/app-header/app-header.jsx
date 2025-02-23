@@ -3,20 +3,20 @@ import styles from './app-header.module.css';
 
 const AppHeader = () => {
     return <header className={styles.header + ' text text_color_inactive text_type_main-default'}>
-        <nav className={styles.left_menu}>
+        <nav className={styles.menu}>
             <div className="pl-5 pr-5 pt-4 pb-4 mt-4 mb-4">
-                <BurgerIcon className="mr-2" type="primary"/>
+                <BurgerIcon type="primary"/>
                 <span className="text_color_primary">Конструктор</span>
             </div>
             <div className="pl-5 pr-5 pt-4 pb-4 mt-4 mb-4">
-                <ListIcon className="mr-2" type="secondary"/>
+                <ListIcon type="secondary"/>
                 <span>Лента заказов</span>
             </div>
         </nav>
         <Logo className={styles.logo}/>
-        <nav className={styles.right_menu}>
+        <nav className={styles.menu}>
             <div className="pl-5 pr-5 pt-4 pb-4 mt-4 mb-4">
-                <ProfileIcon className="mr-2" type="secondary" />
+                <ProfileIcon type="secondary" />
                 <span >Личный кабинет</span>
             </div>
         </nav>

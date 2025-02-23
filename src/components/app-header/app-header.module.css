@@ -5,22 +5,15 @@
     position: relative;
 }
 
-.left_menu {
+.menu {
     display: flex;
     gap: 8px;
 }
 
-.left_menu > div {
+.menu > div {
     display: flex;
     cursor: pointer;
-}
-
-.right_menu {
-    display: flex;
-}
-.right_menu > div {
-    cursor: pointer;
-    display: flex;
+    gap: 8px;
 }
 
 .logo {
