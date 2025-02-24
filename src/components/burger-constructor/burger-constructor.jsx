@@ -4,6 +4,7 @@ import dataType from '../../utils/data.proptypes'
 import PropTypes from "prop-types";
 
 const BurgerConstructor = ({ bun, fillings }) => {
+    const sum = bun.price + fillings.reduce((result, current) => result + current.price, 0);
     return <section className={styles.burger_constructor}>
         <ConstructorElement
             extraClass="ml-8"
@@ -32,7 +33,7 @@ const BurgerConstructor = ({ bun, fillings }) => {
             isLocked={true}
         />
         <div className={styles.total}>
-            <span className="text text_type_digits-medium">610 <CurrencyIcon type="primary" className={styles.total_currency_icon}/>
+            <span className="text text_type_digits-medium">{sum} <CurrencyIcon type="primary" className={styles.total_currency_icon}/>
             </span>
             <Button htmlType="button" type="primary" size="large" extraClass="ml-10">Оформить заказ</Button>
         </div>
