@@ -38,6 +38,7 @@ const BurgerIngredients = ({ ingredients }) => {
                 <h2 style={{textAlign: 'left'}} className="text text_type_main-medium" ref={element => ingredientTypeHeaderRefs.current[ingredientType.type] = element}>{ingredientType.label}</h2>
                 <ul className={styles.ingredient_grid}>
                     {ingredients
+                        .filter(ingredient => ingredient.type === ingredientType.type)
                         .map(ingredient =>
                             <li key={ingredient._id} className={styles.ingredient_card_wrapper}>
                                 <IngredientCard {...ingredient}></IngredientCard>

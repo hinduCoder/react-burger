@@ -4,6 +4,8 @@
     gap: 1px;
     height: 208px;
     align-items: center;
+    position: relative;
+    cursor: pointer;
 }
 
 .ingredient_card img {
