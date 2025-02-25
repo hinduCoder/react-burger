@@ -1,0 +1,21 @@
+:global(:root) {
+    scrollbar-color: unset !important;
+}
+
+.app {
+  text-align: center;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  
+  overflow: hidden;
+}
+
+

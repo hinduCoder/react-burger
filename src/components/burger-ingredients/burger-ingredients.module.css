@@ -1,0 +1,32 @@
+.ingredients_section {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+}
+
+.ingredients_list {
+    composes: cool-scrollbar from '../../styles/scrollbar.module.css';
+    overflow-y: auto;
+    margin-top: 40px;
+}
+
+.ingredient_card_wrapper {
+    display: block;
+}
+
+.ingredient_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+    column-gap: 24px;
+    padding-left: 0;
+    width: 600px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: stretch;
+}
+
+.heading {
+    text-align: left;
+}

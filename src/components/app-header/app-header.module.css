@@ -1,0 +1,21 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+}
+
+.menu {
+    display: flex;
+    gap: 8px;
+}
+
+.menu > a {
+    display: flex;
+    cursor: pointer;
+    gap: 8px;
+}
+
+.logo {
+    position: absolute;
+}
