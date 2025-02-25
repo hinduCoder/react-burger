@@ -20,7 +20,7 @@ const BurgerIngredients = ({ ingredients }) => {
     
     return ( 
         <section className={styles.ingredients_section}>
-            <h1 className="text text_type_main-large" style={{textAlign: 'left'}} >Соберите бургер</h1>
+            <h1 className={`text text_type_main-large ${styles.heading}`}>Соберите бургер</h1>
             <nav className={styles.tabs}>
                 {ingredientTypes.map(tab => 
                     <Tab 
@@ -37,7 +37,8 @@ const BurgerIngredients = ({ ingredients }) => {
             <section className={styles.ingredients_list}>
                 {ingredientTypes.map(ingredientType => 
                     <Fragment key={ingredientType.type}>
-                        <h2 style={{textAlign: 'left'}} className="text text_type_main-medium" ref={element => ingredientTypeHeaderRefs.current[ingredientType.type] = element}>{ingredientType.label}</h2>
+                        <h2 className={`text text_type_main-medium ${styles.heading}`} 
+                            ref={element => ingredientTypeHeaderRefs.current[ingredientType.type] = element}>{ingredientType.label}</h2>
                         <ul className={styles.ingredient_grid}>
                             {ingredients
                                 .filter(ingredient => ingredient.type === ingredientType.type)

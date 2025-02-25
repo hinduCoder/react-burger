@@ -3,7 +3,7 @@ import styles from './app-header.module.css';
 
 const AppHeader = () => {
     return (
-        <header className={styles.header + ' text text_color_inactive text_type_main-default'}>
+        <header className={`${styles.header} text text_color_inactive text_type_main-default`}>
             <nav className={styles.menu}>
                 <a className="pl-5 pr-5 pt-4 pb-4 mt-4 mb-4">
                     <BurgerIcon type="primary"/>
