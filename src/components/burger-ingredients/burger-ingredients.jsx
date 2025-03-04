@@ -1,18 +1,20 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
-import { Fragment, useRef, useState } from "react";
-import dataType from '../../utils/data.proptypes'
-import PropTypes from "prop-types";
+import { useRef, useState } from "react";
 import IngredientCard from "../ingredient-card/ingredient-card";
+import { useSelector } from "react-redux";
 
-const BurgerIngredients = ({ ingredients }) => {
+const ingredientTypes = [
+    { type: 'bun', label: 'Булки' },
+    { type: 'sauce', label: 'Соусы' },
+    { type: 'main', label: 'Начинки' },
+];
+
+const BurgerIngredients = () => {
+    const ingredients = useSelector(store => store.ingredients.list);
+
     const [selectedIngredientType, setSelectedIngredientType] = useState('bun');
     const ingredientTypeHeaderRefs = useRef({});
-    const ingredientTypes = [
-        { type: 'bun', label: 'Булки' },
-        { type: 'sauce', label: 'Соусы' },
-        { type: 'main', label: 'Начинки' },
-    ];
     
     const ingredientTypeItemsMap = new Map();
     ingredientTypes.forEach(ingredientType => ingredientTypeItemsMap.set(ingredientType.type, []));

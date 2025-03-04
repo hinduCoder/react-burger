@@ -11,7 +11,6 @@ const loadData = createAsyncThunk('ingredients/loadData', async (arg, { rejectWi
             console.error(result);
             return rejectWithValue();
         }
-        result.data.forEach(item => item.count = Math.trunc(Math.random() * 10));
         return result.data;
     } catch (e) {
         alert('Не удалось загрузить данные');
@@ -30,7 +29,7 @@ const slice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(loadData.fulfilled, (state, action) => {
-            state.list.push(...action.payload);            
+            state.list = action.payload;            
         })
     }
 })
