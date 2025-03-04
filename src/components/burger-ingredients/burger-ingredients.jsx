@@ -16,9 +16,17 @@ const BurgerIngredients = () => {
     const [selectedIngredientType, setSelectedIngredientType] = useState('bun');
     const ingredientTypeHeaderRefs = useRef({});
     
-    const ingredientTypeItemsMap = new Map();
-    ingredientTypes.forEach(ingredientType => ingredientTypeItemsMap.set(ingredientType.type, []));
-    ingredients.forEach(item => ingredientTypeItemsMap.get(item.type).push(item));
+    const onListScroll = e => {
+        const currentTab = Object.keys(ingredientTypeHeaderRefs.current).findLast(tab=> e.target.getBoundingClientRect().y - ingredientTypeHeaderRefs.current[tab].getBoundingClientRect().y >= 0);
+        if (currentTab !== selectedIngredientType) {
+            setSelectedIngredientType(currentTab);
+        }
+    }
+    
+    const onTabClick = (tab) => {
+        setSelectedIngredientType(tab.type);
+        ingredientTypeHeaderRefs.current[tab.type].scrollIntoView({behavior: "smooth"});
+    }
     
     return ( 
         <section className={styles.ingredients_section}>
@@ -29,33 +37,28 @@ const BurgerIngredients = () => {
                         key={tab.type} 
                         active={selectedIngredientType === tab.type} 
                         value={tab.type} 
-                        onClick={() =>  {
-                            setSelectedIngredientType(tab.type);
-                            ingredientTypeHeaderRefs.current[tab.type].scrollIntoView({behavior: "smooth"});
-                        }}>
+                        onClick={() => onTabClick(tab)}>
                         {tab.label}
                     </Tab>)}
             </nav>
-            <section className={styles.ingredients_list}>
+            <section className={styles.ingredients_list} onScroll={onListScroll}>
                 {ingredientTypes.map(ingredientType => 
-                    <Fragment key={ingredientType.type}>
-                        <h2 className={`text text_type_main-medium ${styles.heading}`} 
-                            ref={element => ingredientTypeHeaderRefs.current[ingredientType.type] = element}>{ingredientType.label}</h2>
+                    <div key={ingredientType.type} ref={element => ingredientTypeHeaderRefs.current[ingredientType.type] = element}> 
+                        <h2 className={`text text_type_main-medium ${styles.heading}`}>{ingredientType.label}</h2>
                         <ul className={styles.ingredient_grid}>
                             {ingredients
                                 .filter(ingredient => ingredient.type === ingredientType.type)
                                 .map(ingredient =>
                                     <li key={ingredient._id} className={styles.ingredient_card_wrapper}>
-                                        <IngredientCard {...ingredient}></IngredientCard>
+                                        <IngredientCard {...ingredient} id={ingredient._id}></IngredientCard>
                                     </li>)}
                         </ul>
-                    </Fragment>)}
+                    </div>)}
             </section>
         </section>);
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(dataType)
 }
 
 export default BurgerIngredients;
