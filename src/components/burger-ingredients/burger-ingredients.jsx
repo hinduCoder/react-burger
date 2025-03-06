@@ -55,7 +55,7 @@ const BurgerIngredients = () => {
                                 .filter(ingredient => ingredient.type === ingredientType.type)
                                 .map(ingredient =>
                                     <li key={ingredient._id} className={styles.ingredient_card_wrapper}>
-                                        <IngredientCard {...ingredient} id={ingredient._id}></IngredientCard>
+                                        <IngredientCard ingredient={ingredient}></IngredientCard>
                                     </li>)}
                         </ul>
                     </div>)}
