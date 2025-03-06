@@ -1,11 +1,9 @@
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from './ingredient-card.module.css'
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useDrag } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
-import { hideIngredientInfo, showIngredientInfo } from "../../services/ingredient-details";
+import { useDispatch } from "react-redux";
+import { showIngredientInfo } from "../../services/ingredient-details";
 
 const IngredientCard = (props) => {
     const [, dragTarget] = useDrag({
@@ -14,7 +12,6 @@ const IngredientCard = (props) => {
     })
 
     const dispatch = useDispatch();
-    const showDetails = useSelector(store => store.ingredientDetails.detailsOpened);
     
     const { count, name, image, price, ...details } = props;
     return (
@@ -28,9 +25,6 @@ const IngredientCard = (props) => {
                 </div>
                 <div className="text text_type_main-default">{name}</div>
             </div>
-            {showDetails && <Modal header="Детали ингредиента" onClose={() => dispatch(hideIngredientInfo())}>
-                <IngredientDetails {...details} name={name}  />
-            </Modal>}
         </>)
 }
 

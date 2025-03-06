@@ -69,7 +69,7 @@ const BurgerConstructor = () => {
                 <Button disabled={!bun} htmlType="button" type="primary" size="large" extraClass="ml-10" onClick={() => dispatch(makeOrder([bun._id, ...fillings.map(f => f._id)]))}>Оформить заказ</Button>
             </div>
             {showOrderInfo && <Modal onClose={() => { dispatch(closeOrderInfo())}}>
-                <OrderDetails orderNumber={orderNumber} />
+                <OrderDetails />
             </Modal>}
         </section>)
 }

@@ -2,7 +2,10 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css'
 import { useRef, useState } from "react";
 import IngredientCard from "../ingredient-card/ingredient-card";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Modal from "../modal/modal";
+import { hideIngredientInfo } from "../../services/ingredient-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const ingredientTypes = [
     { type: 'bun', label: 'Булки' },
@@ -12,7 +15,9 @@ const ingredientTypes = [
 
 const BurgerIngredients = () => {
     const ingredients = useSelector(store => store.ingredients.list);
-
+    const showDetails = useSelector(store => store.ingredientDetails.detailsOpened);
+    const dispatch = useDispatch();
+    
     const [selectedIngredientType, setSelectedIngredientType] = useState('bun');
     const ingredientTypeHeaderRefs = useRef({});
     
@@ -55,6 +60,9 @@ const BurgerIngredients = () => {
                         </ul>
                     </div>)}
             </section>
+            {showDetails && <Modal header="Детали ингредиента" onClose={() => dispatch(hideIngredientInfo())}>
+                <IngredientDetails />
+            </Modal>}
         </section>);
 }
 

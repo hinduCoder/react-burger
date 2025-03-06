@@ -1,8 +1,10 @@
 import orderDoneImage from "../../images/order-done.svg";
 import styles from "./order-details.module.css";
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-const OrderDetails = ({ orderNumber }) => {
+const OrderDetails = () => {
+    const orderNumber = useSelector(store => store.order.number);
+
     return (
         <>
             <p className="text text_type_digits-large mb-8">{orderNumber}</p>
@@ -16,7 +18,6 @@ const OrderDetails = ({ orderNumber }) => {
 }
 
 OrderDetails.propTypes = {
-    orderNumber: PropTypes.string
 }
 
 export default OrderDetails;
