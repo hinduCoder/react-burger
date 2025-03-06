@@ -25,14 +25,21 @@ const slice = createSlice({
         list: []
     },
     reducers: {
-
+        incrementCount(state, action) {
+            state.list.find(ingredient => ingredient._id === action.payload).count++;
+        },
+        decrementCount(state, action) {
+            state.list.find(ingredient => ingredient._id === action.payload).count--;
+        }
     },
     extraReducers: builder => {
         builder.addCase(loadData.fulfilled, (state, action) => {
-            state.list = action.payload;            
+            state.list = action.payload;
+            state.list.forEach(ingredient => ingredient.count = 0);
         })
     }
 })
 
 export { loadData };
+export const { incrementCount, decrementCount } = slice.actions;
 export default slice.reducer;
