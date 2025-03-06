@@ -29,7 +29,4 @@ const IngredientDetails = () => {
     )
 }
 
-IngredientDetails.propTypes = {
-}
-
 export default IngredientDetails;

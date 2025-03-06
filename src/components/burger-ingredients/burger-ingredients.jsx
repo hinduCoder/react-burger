@@ -66,7 +66,4 @@ const BurgerIngredients = () => {
         </section>);
 }
 
-BurgerIngredients.propTypes = {
-}
-
 export default BurgerIngredients;

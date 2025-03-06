@@ -70,7 +70,4 @@ const BurgerConstructor = () => {
         </section>)
 }
 
-BurgerConstructor.propTypes = {
-}
-
 export default BurgerConstructor;
