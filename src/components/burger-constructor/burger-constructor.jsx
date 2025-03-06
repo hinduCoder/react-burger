@@ -1,11 +1,13 @@
-import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-constructor.module.css'
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
-import { addFilling, removeFilling, setBun } from "../../services/burger-constructor";
+import { addFilling, setBun } from "../../services/burger-constructor";
 import { closeOrderInfo, makeOrder } from "../../services/order";
+import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
+import { decrementCount, incrementCount } from "../../services/ingredients";
 
 const BurgerConstructor = () => {
     const { bun, fillings } = useSelector(store => store.burgerConstructor);
@@ -18,17 +20,17 @@ const BurgerConstructor = () => {
         
         drop({ ingredient }) {
             if (ingredient.type === 'bun') {
+                if (bun) {
+                    dispatch(decrementCount(bun._id))
+                }
                 dispatch(setBun(ingredient));
             } else {
                 dispatch(addFilling(ingredient));
             }
+            dispatch(incrementCount(ingredient._id))
         }
     })
     const sum = (bun?.price ?? 0)*2 + fillings.reduce((result, current) => result + current.price, 0);
-    
-    const removeIngredient = (id) => {
-        dispatch(removeFilling(id))
-    }
     
     return (
         <section ref={dropTarget} className={styles.burger_constructor}>
@@ -44,13 +46,7 @@ const BurgerConstructor = () => {
             </div>
             <ul className={styles.list}>
                 {fillings.map(item => <li key={item.localId}>
-                    <DragIcon type="primary"/>
-                    <ConstructorElement
-                        text={item.name}
-                        thumbnail={item.image_mobile}
-                        price={item.price}
-                        handleClose={() => removeIngredient(item.localId)}
-                    />
+                    <BurgerConstructorItem item={item} />
                 </li>)}
             </ul>
             <div>
