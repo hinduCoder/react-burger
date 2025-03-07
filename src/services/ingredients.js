@@ -1,13 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiRequest, ingredientsApiPath } from '../utils/api';
 
-const loadData = createAsyncThunk(
-    'ingredients/loadData',
-    async (arg, { rejectWithValue }) => {
-        const result = await apiRequest(ingredientsApiPath);
-        return result.data;
-    }
-);
+const loadData = createAsyncThunk('ingredients/loadData', async () => {
+    const result = await apiRequest(ingredientsApiPath);
+    return result.data;
+});
 
 const slice = createSlice({
     name: 'ingredients',
@@ -22,6 +19,9 @@ const slice = createSlice({
         decrementCount(state, action) {
             state.list.find(ingredient => ingredient._id === action.payload)
                 .count--;
+        },
+        clearCounters(state) {
+            state.list.forEach(ingredient => (ingredient.count = 0));
         }
     },
     extraReducers: builder => {
@@ -40,5 +40,5 @@ const slice = createSlice({
 });
 
 export { loadData };
-export const { incrementCount, decrementCount } = slice.actions;
+export const { incrementCount, decrementCount, clearCounters } = slice.actions;
 export default slice.reducer;

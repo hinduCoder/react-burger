@@ -36,9 +36,14 @@ const slice = createSlice({
             );
             const [movingFilling] = state.fillings.splice(sourceIndex, 1);
             state.fillings.splice(targetIndex, 0, movingFilling);
+        },
+        clear(state) {
+            state.fillings = [];
+            state.bun = null;
         }
     }
 });
 
-export const { setBun, addFilling, removeFilling, moveFilling } = slice.actions;
+export const { setBun, addFilling, removeFilling, moveFilling, clear } =
+    slice.actions;
 export default slice.reducer;

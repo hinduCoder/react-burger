@@ -8,10 +8,14 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { addFilling, setBun } from '../../services/burger-constructor';
+import { addFilling, clear, setBun } from '../../services/burger-constructor';
 import { closeOrderInfo, makeOrder } from '../../services/order';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
-import { decrementCount, incrementCount } from '../../services/ingredients';
+import {
+    clearCounters,
+    decrementCount,
+    incrementCount
+} from '../../services/ingredients';
 
 const BurgerConstructor = () => {
     const { bun, fillings } = useSelector(store => store.burgerConstructor);
@@ -37,6 +41,17 @@ const BurgerConstructor = () => {
     const sum =
         (bun?.price ?? 0) * 2 +
         fillings.reduce((result, current) => result + current.price, 0);
+
+    const onOrderClick = () => {
+        dispatch(makeOrder([bun._id, ...fillings.map(f => f._id)])).then(
+            result => {
+                if (!result.error) {
+                    dispatch(clear());
+                    dispatch(clearCounters());
+                }
+            }
+        );
+    };
 
     return (
         <section ref={dropTarget} className={styles.burger_constructor}>
@@ -85,11 +100,7 @@ const BurgerConstructor = () => {
                     type="primary"
                     size="large"
                     extraClass="ml-10"
-                    onClick={() =>
-                        dispatch(
-                            makeOrder([bun._id, ...fillings.map(f => f._id)])
-                        )
-                    }>
+                    onClick={onOrderClick}>
                     Оформить заказ
                 </Button>
             </div>
