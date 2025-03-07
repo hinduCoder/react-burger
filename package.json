@@ -50,7 +50,15 @@
       "last 1 safari version"
     ]
   },
+  "prettier": {
+    "bracketSameLine": true,
+    "trailingComma": "none",
+    "tabWidth": 4,
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  },
   "devDependencies": {
-    "@types/prop-types": "^15.7.14"
+    "@types/prop-types": "^15.7.14",
+    "prettier": "^3.5.3"
   }
 }
