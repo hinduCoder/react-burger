@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
     name: 'ingredientDetails',
@@ -16,7 +16,7 @@ const slice = createSlice({
             state.ingredient = null;
         }
     }
-})
+});
 
 export const { showIngredientInfo, hideIngredientInfo } = slice.actions;
 

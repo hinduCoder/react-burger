@@ -1,8 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 import order from './order';
-import ingredients from "./ingredients";
-import ingredientDetails from "./ingredient-details";
-import burgerConstructor from "./burger-constructor";
+import ingredients from './ingredients';
+import ingredientDetails from './ingredient-details';
+import burgerConstructor from './burger-constructor';
 
 export default configureStore({
     reducer: {
@@ -12,4 +12,4 @@ export default configureStore({
         order
     },
     devTools: true
-})
+});

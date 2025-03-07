@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 export default PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -9,5 +9,5 @@ export default PropTypes.shape({
     image: PropTypes.string.isRequired,
     image_mobile: PropTypes.string.isRequired,
     image_large: PropTypes.string.isRequired,
-    count: PropTypes.number 
+    count: PropTypes.number
 });
