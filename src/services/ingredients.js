@@ -1,19 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ingredientsApiUrl } from '../utils/api';
+import { apiRequest, ingredientsApiPath } from '../utils/api';
 
 const loadData = createAsyncThunk(
     'ingredients/loadData',
     async (arg, { rejectWithValue }) => {
-        try {
-            const response = await fetch(ingredientsApiUrl);
-            const result = await response.json();
-            if (!result.success) {
-                return rejectWithValue(result);
-            }
-            return result.data;
-        } catch (e) {
-            return rejectWithValue(e);
-        }
+        const result = await apiRequest(ingredientsApiPath);
+        return result.data;
     }
 );
 
@@ -42,7 +34,7 @@ const slice = createSlice({
         });
         builder.addCase(loadData.rejected, (state, action) => {
             alert('Не удалось загрузить данные');
-            console.error(action.payload);
+            console.error(action.error);
         });
     }
 });

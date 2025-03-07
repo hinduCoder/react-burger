@@ -1,28 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { orderApiUrl } from '../utils/api';
+import { orderApiUrl, apiRequest } from '../utils/api';
 
 const makeOrder = createAsyncThunk(
     'order/submit',
     async (ids, { rejectWithValue }) => {
-        try {
-            const response = await fetch(orderApiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json'
-                },
-                body: JSON.stringify({
-                    ingredients: ids
-                })
-            });
-            const result = await response.json();
-            if (!result.success) {
-                return rejectWithValue(result);
-            }
-            return result.order.number;
-        } catch (e) {
-            return rejectWithValue(e);
-        }
+        const result = await apiRequest(orderApiUrl, {
+            method: 'POST',
+            body: JSON.stringify({
+                ingredients: ids
+            })
+        });
+        return result.order.number;
     }
 );
 
@@ -48,7 +36,7 @@ const slice = createSlice({
         });
         builder.addCase(makeOrder.rejected, (state, action) => {
             alert('Не удалось создать заказ');
-            console.error(action.payload);
+            console.error(action.error);
         });
     }
 });
