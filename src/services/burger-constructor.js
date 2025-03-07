@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-let lastFillingId = 0;
-
+import { v7 as uuid } from 'uuid';
 const slice = createSlice({
     name: 'burgerConstructor',
     initialState: {
@@ -12,11 +10,16 @@ const slice = createSlice({
         setBun(state, action) {
             state.bun = action.payload;
         },
-        addFilling(state, action) {
-            state.fillings.push({
-                ...action.payload,
-                localId: lastFillingId++
-            });
+        addFilling: {
+            reducer(state, action) {
+                state.fillings.push({
+                    ...action.payload
+                });
+            },
+            prepare(payload) {
+                const id = uuid();
+                return { payload: { ...payload, localId: id } };
+            }
         },
         removeFilling(state, action) {
             state.fillings = state.fillings.filter(
