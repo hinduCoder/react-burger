@@ -14,6 +14,7 @@ const makeOrder = createAsyncThunk('order/submit', async ids => {
 const slice = createSlice({
     name: 'order',
     initialState: {
+        loading: false,
         showOrderInfo: false,
         number: null
     },
@@ -24,16 +25,20 @@ const slice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(makeOrder.pending, state => {
-            state.showOrderInfo = false;
+            state.showOrderInfo = true;
+            state.loading = true;
             state.number = null;
         });
         builder.addCase(makeOrder.fulfilled, (state, action) => {
             state.number = action.payload;
             state.showOrderInfo = true;
+            state.loading = false;
         });
         builder.addCase(makeOrder.rejected, (state, action) => {
             alert('Не удалось создать заказ');
             console.error(action.error);
+            state.loading = false;
+            state.showOrderInfo = false;
         });
     }
 });

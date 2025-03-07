@@ -1,13 +1,22 @@
 import orderDoneImage from '../../images/order-done.svg';
 import styles from './order-details.module.css';
 import { useSelector } from 'react-redux';
+import { RevolvingDot } from 'react-loader-spinner';
 
 const OrderDetails = () => {
-    const orderNumber = useSelector(store => store.order.number);
+    const { number, loading } = useSelector(store => store.order);
 
+    if (loading) {
+        return (
+            <RevolvingDot
+                color="#4C4CFF"
+                wrapperClass={styles.loader_wrapper}
+            />
+        );
+    }
     return (
         <>
-            <p className="text text_type_digits-large mb-8">{orderNumber}</p>
+            <p className="text text_type_digits-large mb-8">{number}</p>
             <p className="text text_type_main-medium">идентификатор заказа</p>
             <img
                 src={orderDoneImage}
