@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { useDispatch } from 'react-redux';
 import { loadData } from '../../services/ingredients';
+import { Outlet } from 'react-router-dom';
 
 function App() {
     const dispatch = useDispatch();
@@ -17,8 +16,7 @@ function App() {
         <div className={styles.app}>
             <AppHeader />
             <main className={styles.main}>
-                <BurgerIngredients />
-                <BurgerConstructor />
+                <Outlet />
             </main>
         </div>
     );

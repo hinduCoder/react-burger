@@ -8,6 +8,8 @@ import store from './services/store';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import LoginPage from './pages/login/login';
+import MainPage from './pages/main/main';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,7 +18,10 @@ root.render(
             <DndProvider backend={HTML5Backend}>
                 <Router>
                     <Routes>
-                        <Route path="/" element={<App />} />
+                        <Route element={<App />}>
+                            <Route path="/" element={<MainPage />} />
+                            <Route path="/login" element={<LoginPage />} />
+                        </Route>
                     </Routes>
                 </Router>
             </DndProvider>
