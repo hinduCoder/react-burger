@@ -10,6 +10,9 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import LoginPage from './pages/login/login';
 import MainPage from './pages/main/main';
+import RegisterPage from './pages/register/register';
+import ForgotPasswordPage from './pages/forgot-password/forgot-password';
+import ResetPasswordPage from './pages/reset-password/reset-password';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,6 +24,18 @@ root.render(
                         <Route element={<App />}>
                             <Route path="/" element={<MainPage />} />
                             <Route path="/login" element={<LoginPage />} />
+                            <Route
+                                path="/register"
+                                element={<RegisterPage />}
+                            />
+                            <Route
+                                path="/forgot-password"
+                                element={<ForgotPasswordPage />}
+                            />
+                            <Route
+                                path="/reset-password"
+                                element={<ResetPasswordPage />}
+                            />
                         </Route>
                     </Routes>
                 </Router>
