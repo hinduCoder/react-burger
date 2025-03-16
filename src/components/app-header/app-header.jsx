@@ -5,16 +5,17 @@ import {
     ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
+import { Link } from 'react-router-dom';
 
 const AppHeader = () => {
     return (
         <header
             className={`${styles.header} text text_color_inactive text_type_main-default`}>
             <nav className={styles.menu}>
-                <a className="pl-5 pr-5 pt-4 pb-4 mt-4 mb-4">
+                <Link to="/" className="pl-5 pr-5 pt-4 pb-4 mt-4 mb-4">
                     <BurgerIcon type="primary" />
                     <span className="text_color_primary">Конструктор</span>
-                </a>
+                </Link>
                 <a className="pl-5 pr-5 pt-4 pb-4 mt-4 mb-4">
                     <ListIcon type="secondary" />
                     <span>Лента заказов</span>
@@ -22,10 +23,12 @@ const AppHeader = () => {
             </nav>
             <Logo className={styles.logo} />
             <nav className={styles.menu}>
-                <a className="pl-5 pr-5 pt-4 pb-4 mt-4 mb-4">
+                <Link
+                    to="/profile"
+                    className="pl-5 pr-5 pt-4 pb-4 mt-4 mb-4 text_color_inactive">
                     <ProfileIcon type="secondary" />
                     <span>Личный кабинет</span>
-                </a>
+                </Link>
             </nav>
         </header>
     );

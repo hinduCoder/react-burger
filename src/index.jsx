@@ -13,6 +13,9 @@ import MainPage from './pages/main/main';
 import RegisterPage from './pages/register/register';
 import ForgotPasswordPage from './pages/forgot-password/forgot-password';
 import ResetPasswordPage from './pages/reset-password/reset-password';
+import ProfilePage from './pages/profile/profile';
+import ProfileData from './components/profile-data/profile-data';
+import OrderHistory from './components/order-history/order-history';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -36,6 +39,16 @@ root.render(
                                 path="/reset-password"
                                 element={<ResetPasswordPage />}
                             />
+                            <Route path="/profile" element={<ProfilePage />}>
+                                <Route
+                                    path="/profile"
+                                    element={<ProfileData />}
+                                />
+                                <Route
+                                    path="/profile/orders"
+                                    element={<OrderHistory />}
+                                />
+                            </Route>
                         </Route>
                     </Routes>
                 </Router>
