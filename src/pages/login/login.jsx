@@ -3,13 +3,32 @@ import {
     EmailInput,
     PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import styles from './login.module.css';
+import { useDispatch } from 'react-redux';
+import { login } from '../../services/auth';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const onLoginClick = () => {
+        dispatch(
+            login({
+                email,
+                password
+            })
+        ).then(result => {
+            if (!result.error) {
+                navigate('/');
+            }
+        });
+    };
+
     return (
         <main className={styles.main}>
             <section className={styles.container}>
@@ -29,7 +48,8 @@ const LoginPage = () => {
                     extraClass="mt-6"
                     htmlType="button"
                     type="primary"
-                    size="medium">
+                    size="medium"
+                    onClick={onLoginClick}>
                     Войти в меня
                 </Button>
                 <p className="mt-20 text text_type_main-default text_color_inactive">

@@ -6,12 +6,31 @@ import {
     Input,
     PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { register } from '../../services/auth';
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const onRegisterClick = () => {
+        dispatch(
+            register({
+                name,
+                email,
+                password
+            })
+        ).then(result => {
+            if (!result.error) {
+                navigate('/');
+            }
+        });
+    };
+
     return (
         <main className={styles.main}>
             <section className={styles.container}>
@@ -37,7 +56,8 @@ const RegisterPage = () => {
                     extraClass="mt-6"
                     htmlType="button"
                     type="primary"
-                    size="medium">
+                    size="medium"
+                    onClick={onRegisterClick}>
                     Зарегистрироваться
                 </Button>
                 <p className="mt-20 text text_type_main-default text_color_inactive">

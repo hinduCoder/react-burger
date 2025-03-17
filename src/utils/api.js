@@ -1,6 +1,8 @@
 export const apiUrl = 'https://norma.nomoreparties.space/api/';
-export const ingredientsApiPath = `ingredients`;
-export const orderApiUrl = `orders`;
+export const ingredientsApiPath = 'ingredients';
+export const orderApiPath = 'orders';
+export const registerApiPath = 'auth/register';
+export const loginApiPath = 'auth/login';
 
 const checkResponse = response => {
     if (response.ok) {
