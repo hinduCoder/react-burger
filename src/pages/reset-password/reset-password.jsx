@@ -5,11 +5,24 @@ import {
     Input,
     PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { apiRequest, confirmResetPasswordApiPath } from '../../utils/api';
 
 const ResetPasswordPage = () => {
     const [password, setPassword] = useState('');
     const [confirmationCode, setConfirmationCode] = useState('');
+
+    const navigate = useNavigate();
+    const resetPassword = async () => {
+        await apiRequest(confirmResetPasswordApiPath, {
+            method: 'POST',
+            body: JSON.stringify({
+                password,
+                token: confirmationCode
+            })
+        });
+        navigate('/login');
+    };
     return (
         <main className={styles.main}>
             <section className={styles.container}>
@@ -32,7 +45,8 @@ const ResetPasswordPage = () => {
                     extraClass="mt-6"
                     htmlType="button"
                     type="primary"
-                    size="medium">
+                    size="medium"
+                    onClick={resetPassword}>
                     Сохранить
                 </Button>
                 <p className="mt-20 text text_type_main-default text_color_inactive">

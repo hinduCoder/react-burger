@@ -5,11 +5,18 @@ import {
     EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
+import { apiRequest, startResetPasswordApiPath } from '../../utils/api';
 
 const ForgotPasswordPage = () => {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
-    const restorePassword = () => {
+    const restorePassword = async () => {
+        await apiRequest(startResetPasswordApiPath, {
+            method: 'POST',
+            body: JSON.stringify({
+                email
+            })
+        });
         navigate('/reset-password');
     };
     return (
