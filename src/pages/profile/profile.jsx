@@ -1,13 +1,20 @@
 import styles from './profile.module.css';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../services/auth';
 
 const profileLinks = [
     { route: '/profile', text: 'Профиль' },
-    { route: '/profile/orders', text: 'История заказов' },
-    { route: '/sign-out', text: 'Выход' }
+    { route: '/profile/orders', text: 'История заказов' }
 ];
 
 const ProfilePage = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const signOut = () => {
+        dispatch(logout());
+        navigate('/');
+    };
     return (
         <main className={styles.main}>
             <section className={styles.side_panel}>
@@ -26,6 +33,11 @@ const ProfilePage = () => {
                             {link.text}
                         </NavLink>
                     ))}
+                    <a
+                        className={`${styles.link} text text_type_main-medium text_color_inactive`}
+                        onClick={signOut}>
+                        Выход
+                    </a>
                 </nav>
                 <p className="text text_type_main-default text_color_inactive">
                     В этом разделе вы можете изменить свои персональные данные

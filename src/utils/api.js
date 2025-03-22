@@ -5,6 +5,7 @@ export const registerApiPath = 'auth/register';
 export const loginApiPath = 'auth/login';
 export const userApiPath = 'auth/user';
 export const tokenApiPath = 'auth/token';
+export const logoutApiPath = 'auth/logout';
 export const startResetPasswordApiPath = 'password-reset';
 export const confirmResetPasswordApiPath = 'password-reset/reset';
 

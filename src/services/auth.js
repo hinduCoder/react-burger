@@ -4,7 +4,8 @@ import {
     registerApiPath,
     loginApiPath,
     userApiPath,
-    saveTokens
+    saveTokens,
+    logoutApiPath
 } from '../utils/api';
 
 const register = createAsyncThunk('auth/register', async data => {
@@ -40,6 +41,17 @@ const editUser = createAsyncThunk('auth/editUser', async data => {
         true
     );
     return response.user;
+});
+
+const logout = createAsyncThunk('auth/logout', async () => {
+    await apiRequest(logoutApiPath, {
+        method: 'POST',
+        body: JSON.stringify({
+            token: localStorage.getItem('refreshToken')
+        })
+    });
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
 });
 
 const slice = createSlice({
@@ -81,9 +93,13 @@ const slice = createSlice({
         builder.addCase(editUser.fulfilled, (state, action) => {
             state.currentUser = action.payload;
         });
+
+        builder.addCase(logout.fulfilled, (state, action) => {
+            state.currentUser = null;
+        });
     }
 });
 
-export { register, login, loadUser, editUser };
+export { register, login, loadUser, editUser, logout };
 export const {} = slice.actions;
 export default slice.reducer;
