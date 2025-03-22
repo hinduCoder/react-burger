@@ -3,7 +3,8 @@ import {
     apiRequest,
     registerApiPath,
     loginApiPath,
-    userApiPath
+    userApiPath,
+    saveTokens
 } from '../utils/api';
 
 const register = createAsyncThunk('auth/register', async data => {
@@ -11,8 +12,7 @@ const register = createAsyncThunk('auth/register', async data => {
         method: 'POST',
         body: JSON.stringify(data)
     });
-    localStorage.setItem('accessToken', response.accessToken);
-    localStorage.setItem('refreshToken', response.refreshToken);
+    saveTokens(response);
     return response.user;
 });
 
@@ -21,8 +21,7 @@ const login = createAsyncThunk('auth/login', async data => {
         method: 'POST',
         body: JSON.stringify(data)
     });
-    localStorage.setItem('accessToken', response.accessToken);
-    localStorage.setItem('refreshToken', response.refreshToken);
+    saveTokens(response);
     return response.user;
 });
 
