@@ -14,6 +14,7 @@ const ProfilePage = () => {
                 <nav className={styles.navigation_panel}>
                     {profileLinks.map(link => (
                         <NavLink
+                            key={link.route}
                             to={link.route}
                             end
                             className={({ isActive }) =>

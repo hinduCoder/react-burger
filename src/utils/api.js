@@ -3,6 +3,7 @@ export const ingredientsApiPath = 'ingredients';
 export const orderApiPath = 'orders';
 export const registerApiPath = 'auth/register';
 export const loginApiPath = 'auth/login';
+export const userApiPath = 'auth/user';
 
 const checkResponse = response => {
     if (response.ok) {
