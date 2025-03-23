@@ -16,6 +16,8 @@ import ResetPasswordPage from './pages/reset-password/reset-password';
 import ProfilePage from './pages/profile/profile';
 import ProfileData from './components/profile-data/profile-data';
 import OrderHistory from './components/order-history/order-history';
+import ProtectedRouteElement from './components/protected-route-element/protected-route-element';
+import AnonymousRouteElement from './components/anonymous-route-element/anonymous-route-element';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -26,27 +28,56 @@ root.render(
                     <Routes>
                         <Route element={<App />}>
                             <Route path="/" element={<MainPage />} />
-                            <Route path="/login" element={<LoginPage />} />
+                            <Route
+                                path="/login"
+                                element={
+                                    <AnonymousRouteElement
+                                        element={<LoginPage />}
+                                    />
+                                }
+                            />
                             <Route
                                 path="/register"
-                                element={<RegisterPage />}
+                                element={
+                                    <AnonymousRouteElement
+                                        element={<RegisterPage />}
+                                    />
+                                }
                             />
                             <Route
                                 path="/forgot-password"
-                                element={<ForgotPasswordPage />}
+                                element={
+                                    <AnonymousRouteElement
+                                        element={<ForgotPasswordPage />}
+                                    />
+                                }
                             />
                             <Route
                                 path="/reset-password"
-                                element={<ResetPasswordPage />}
+                                element={
+                                    <AnonymousRouteElement
+                                        element={<ResetPasswordPage />}
+                                    />
+                                }
                             />
-                            <Route path="/profile" element={<ProfilePage />}>
+                            <Route
+                                path="/profile"
+                                element={
+                                    <ProtectedRouteElement
+                                        element={<ProfilePage />}
+                                    />
+                                }>
                                 <Route
                                     path="/profile"
                                     element={<ProfileData />}
                                 />
                                 <Route
                                     path="/profile/orders"
-                                    element={<OrderHistory />}
+                                    element={
+                                        <ProtectedRouteElement
+                                            element={<OrderHistory />}
+                                        />
+                                    }
                                 />
                             </Route>
                         </Route>

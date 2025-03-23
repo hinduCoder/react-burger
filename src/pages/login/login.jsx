@@ -6,7 +6,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import styles from './login.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../services/auth';
 
 const LoginPage = () => {
@@ -15,6 +15,7 @@ const LoginPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const redirectedFrom = useSelector(state => state.route.redirectedFrom);
 
     const onLoginClick = () => {
         dispatch(
@@ -24,7 +25,9 @@ const LoginPage = () => {
             })
         ).then(result => {
             if (!result.error) {
-                navigate('/');
+                navigate(redirectedFrom ?? '/', {
+                    replace: true
+                });
             }
         });
     };

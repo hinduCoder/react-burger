@@ -4,6 +4,7 @@ import ingredients from './ingredients';
 import ingredientDetails from './ingredient-details';
 import burgerConstructor from './burger-constructor';
 import auth from './auth';
+import route from './route';
 
 export default configureStore({
     reducer: {
@@ -11,7 +12,8 @@ export default configureStore({
         ingredients,
         ingredientDetails,
         order,
-        auth
+        auth,
+        route
     },
     devTools: true
 });

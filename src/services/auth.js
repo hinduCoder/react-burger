@@ -57,6 +57,7 @@ const logout = createAsyncThunk('auth/logout', async () => {
 const slice = createSlice({
     name: 'auth',
     initialState: {
+        userLoaded: false,
         currentUser: null
     },
     reducers: {},
@@ -64,6 +65,7 @@ const slice = createSlice({
         builder.addCase(register.pending, state => {});
         builder.addCase(register.fulfilled, (state, action) => {
             state.currentUser = action.payload;
+            state.userLoaded = true;
         });
         builder.addCase(register.rejected, (state, action) => {
             alert('Ошибка при регистрации пользователя');
@@ -74,6 +76,7 @@ const slice = createSlice({
         builder.addCase(login.pending, state => {});
         builder.addCase(login.fulfilled, (state, action) => {
             state.currentUser = action.payload;
+            state.userLoaded = true;
         });
         builder.addCase(login.rejected, (state, action) => {
             alert('Не удалось залогиниться');
@@ -83,11 +86,11 @@ const slice = createSlice({
 
         builder.addCase(loadUser.fulfilled, (state, action) => {
             state.currentUser = action.payload;
+            state.userLoaded = true;
         });
         builder.addCase(loadUser.rejected, (state, action) => {
-            alert('Не удалось получить данные о пользователе');
-            console.error(action.error);
             state.currentUser = null;
+            state.userLoaded = true;
         });
 
         builder.addCase(editUser.fulfilled, (state, action) => {
