@@ -150,5 +150,5 @@ export {
     confirmResetPassword,
     logout
 };
-export const {} = slice.actions;
+
 export default slice.reducer;
