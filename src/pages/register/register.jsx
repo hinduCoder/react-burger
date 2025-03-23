@@ -9,6 +9,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { register } from '../../services/auth';
+import { usePageTitle } from '../../utils/hooks';
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
@@ -17,6 +18,9 @@ const RegisterPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    usePageTitle('Регистрация');
+
     const onRegisterClick = () => {
         dispatch(
             register({

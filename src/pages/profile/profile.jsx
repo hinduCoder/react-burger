@@ -2,6 +2,7 @@ import styles from './profile.module.css';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../services/auth';
+import { usePageTitle } from '../../utils/hooks';
 
 const profileLinks = [
     { route: '/profile', text: 'Профиль' },
@@ -11,6 +12,9 @@ const profileLinks = [
 const ProfilePage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    usePageTitle('Профиль');
+
     const signOut = () => {
         dispatch(logout());
         navigate('/');

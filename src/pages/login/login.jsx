@@ -8,6 +8,7 @@ import { useState } from 'react';
 import styles from './login.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../services/auth';
+import { usePageTitle } from '../../utils/hooks';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -16,6 +17,8 @@ const LoginPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const redirectedFrom = useSelector(state => state.route.redirectedFrom);
+
+    usePageTitle('Авторизация');
 
     const onLoginClick = () => {
         dispatch(

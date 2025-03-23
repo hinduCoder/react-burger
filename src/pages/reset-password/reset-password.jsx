@@ -7,12 +7,16 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { apiRequest, confirmResetPasswordApiPath } from '../../utils/api';
+import { usePageTitle } from '../../utils/hooks';
 
 const ResetPasswordPage = () => {
     const [password, setPassword] = useState('');
     const [confirmationCode, setConfirmationCode] = useState('');
 
     const navigate = useNavigate();
+
+    usePageTitle('Сброс пароля');
+
     const resetPassword = async () => {
         await apiRequest(confirmResetPasswordApiPath, {
             method: 'POST',
