@@ -18,6 +18,7 @@ import ProfileData from './components/profile-data/profile-data';
 import OrderHistory from './components/order-history/order-history';
 import ProtectedRouteElement from './components/protected-route-element/protected-route-element';
 import AnonymousRouteElement from './components/anonymous-route-element/anonymous-route-element';
+import NotFoundPage from './pages/not-found/not-found';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -80,6 +81,7 @@ root.render(
                                     }
                                 />
                             </Route>
+                            <Route path="*" element={<NotFoundPage />} />
                         </Route>
                     </Routes>
                 </Router>
