@@ -5,22 +5,19 @@ import {
     EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { apiRequest, startResetPasswordApiPath } from '../../utils/api';
 import { usePageTitle } from '../../utils/hooks';
+import { useDispatch } from 'react-redux';
+import { startResetPassword } from '../../services/auth';
 
 const ForgotPasswordPage = () => {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     usePageTitle('Восстановление пароля');
 
     const restorePassword = async () => {
-        await apiRequest(startResetPasswordApiPath, {
-            method: 'POST',
-            body: JSON.stringify({
-                email
-            })
-        });
+        await dispatch(startResetPassword(email));
         navigate('/reset-password');
     };
     return (

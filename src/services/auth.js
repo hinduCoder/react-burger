@@ -5,7 +5,9 @@ import {
     loginApiPath,
     userApiPath,
     saveTokens,
-    logoutApiPath
+    logoutApiPath,
+    startResetPasswordApiPath,
+    confirmResetPasswordApiPath
 } from '../utils/api';
 
 const register = createAsyncThunk('auth/register', async data => {
@@ -43,6 +45,31 @@ const editUser = createAsyncThunk('auth/editUser', async data => {
     return response.user;
 });
 
+const startResetPassword = createAsyncThunk(
+    'auth/forgotPassword',
+    async email => {
+        await apiRequest(startResetPasswordApiPath, {
+            method: 'POST',
+            body: JSON.stringify({
+                email
+            })
+        });
+    }
+);
+
+const confirmResetPassword = createAsyncThunk(
+    'auth/resetPassword',
+    async ({ password, confirmationCode }) => {
+        await apiRequest(confirmResetPasswordApiPath, {
+            method: 'POST',
+            body: JSON.stringify({
+                password,
+                token: confirmationCode
+            })
+        });
+    }
+);
+
 const logout = createAsyncThunk('auth/logout', async () => {
     await apiRequest(logoutApiPath, {
         method: 'POST',
@@ -58,7 +85,8 @@ const slice = createSlice({
     name: 'auth',
     initialState: {
         userLoaded: false,
-        currentUser: null
+        currentUser: null,
+        resettingPassword: false
     },
     reducers: {},
     extraReducers: builder => {
@@ -66,6 +94,7 @@ const slice = createSlice({
         builder.addCase(register.fulfilled, (state, action) => {
             state.currentUser = action.payload;
             state.userLoaded = true;
+            state.resettingPassword = false;
         });
         builder.addCase(register.rejected, (state, action) => {
             alert('Ошибка при регистрации пользователя');
@@ -77,6 +106,7 @@ const slice = createSlice({
         builder.addCase(login.fulfilled, (state, action) => {
             state.currentUser = action.payload;
             state.userLoaded = true;
+            state.resettingPassword = false;
         });
         builder.addCase(login.rejected, (state, action) => {
             alert('Не удалось залогиниться');
@@ -97,12 +127,28 @@ const slice = createSlice({
             state.currentUser = action.payload;
         });
 
+        builder.addCase(startResetPassword.fulfilled, state => {
+            state.resettingPassword = true;
+        });
+
+        builder.addCase(confirmResetPassword.fulfilled, state => {
+            state.resettingPassword = false;
+        });
+
         builder.addCase(logout.fulfilled, (state, action) => {
             state.currentUser = null;
         });
     }
 });
 
-export { register, login, loadUser, editUser, logout };
+export {
+    register,
+    login,
+    loadUser,
+    editUser,
+    startResetPassword,
+    confirmResetPassword,
+    logout
+};
 export const {} = slice.actions;
 export default slice.reducer;

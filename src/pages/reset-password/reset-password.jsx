@@ -5,28 +5,31 @@ import {
     Input,
     PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useNavigate } from 'react-router-dom';
-import { apiRequest, confirmResetPasswordApiPath } from '../../utils/api';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { usePageTitle } from '../../utils/hooks';
+import { useDispatch, useSelector } from 'react-redux';
+import { confirmResetPassword } from '../../services/auth';
 
 const ResetPasswordPage = () => {
     const [password, setPassword] = useState('');
     const [confirmationCode, setConfirmationCode] = useState('');
+
+    const resetting = useSelector(state => state.auth.resettingPassword);
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
     usePageTitle('Сброс пароля');
 
     const resetPassword = async () => {
-        await apiRequest(confirmResetPasswordApiPath, {
-            method: 'POST',
-            body: JSON.stringify({
-                password,
-                token: confirmationCode
-            })
-        });
+        await dispatch(confirmResetPassword({ password, confirmationCode }));
         navigate('/login');
     };
+
+    if (!resetting) {
+        return <Navigate to="/" replace />;
+    }
+
     return (
         <main className={styles.main}>
             <section className={styles.container}>
