@@ -15,15 +15,23 @@ import NotFoundPage from '../../pages/not-found/not-found';
 import React, { useEffect } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loadData } from '../../services/ingredients';
+import { loadUser } from '../../services/auth';
 
 function App() {
+    const userLoaded = useSelector(store => store.auth.userLoaded);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(loadData());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!userLoaded) {
+            dispatch(loadUser());
+        }
+    }, [dispatch, userLoaded]);
 
     const navigate = useNavigate();
     const location = useLocation();

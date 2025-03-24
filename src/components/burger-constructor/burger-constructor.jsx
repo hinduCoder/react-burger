@@ -16,12 +16,15 @@ import {
     decrementCount,
     incrementCount
 } from '../../services/ingredients';
+import { useNavigate } from 'react-router-dom';
 
 const BurgerConstructor = () => {
     const { bun, fillings } = useSelector(store => store.burgerConstructor);
     const { showOrderInfo } = useSelector(store => store.order);
+    const currentUser = useSelector(store => store.auth.currentUser);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [, dropTarget] = useDrop({
         accept: 'ingredient',
@@ -43,6 +46,10 @@ const BurgerConstructor = () => {
         fillings.reduce((result, current) => result + current.price, 0);
 
     const onOrderClick = () => {
+        if (!currentUser) {
+            navigate('/login');
+            return;
+        }
         dispatch(makeOrder([bun._id, ...fillings.map(f => f._id)])).then(
             result => {
                 if (!result.error) {
