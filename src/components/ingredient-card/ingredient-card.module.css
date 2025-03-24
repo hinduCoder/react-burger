@@ -12,3 +12,8 @@
     width: 240px;
     height: 120px;
 }
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}

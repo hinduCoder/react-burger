@@ -1,11 +1,26 @@
 import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { usePageTitle } from '../../utils/hooks';
 
-const IngredientDetails = () => {
+const IngredientDetails = ({ compact }) => {
+    usePageTitle('Ингредиент');
+    const { id } = useParams();
     const { name, image_large, proteins, fat, carbohydrates, calories } =
-        useSelector(store => store.ingredientDetails.ingredient);
+        useSelector(
+            store =>
+                store.ingredients.list.find(
+                    ingredient => ingredient._id === id
+                ) ?? {}
+        );
+
     return (
-        <>
+        <section className={!compact ? 'mt-30' : null}>
+            {!compact && (
+                <h2 className="text text_type_main-large">
+                    Детали ингредиента
+                </h2>
+            )}
             <img
                 alt={`Ингредиент для бургера: ${name}`}
                 src={image_large}
@@ -36,7 +51,7 @@ const IngredientDetails = () => {
                     </div>
                 </div>
             </section>
-        </>
+        </section>
     );
 };
 

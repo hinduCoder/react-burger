@@ -5,8 +5,8 @@ import {
 import styles from './ingredient-card.module.css';
 import { useDrag } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import { showIngredientInfo } from '../../services/ingredient-details';
 import itemType from '../../utils/data.proptypes';
+import { Link, useLocation } from 'react-router-dom';
 
 const IngredientCard = ({ ingredient }) => {
     const [, dragTarget] = useDrag({
@@ -14,15 +14,17 @@ const IngredientCard = ({ ingredient }) => {
         item: { ingredient }
     });
 
+    const location = useLocation();
     const dispatch = useDispatch();
 
     const { count, name, image, price } = ingredient;
     return (
-        <>
-            <div
-                ref={dragTarget}
-                className={styles.ingredient_card}
-                onClick={() => dispatch(showIngredientInfo(ingredient))}>
+        <Link
+            to={`/ingredients/${ingredient._id}`}
+            key={ingredient._id}
+            state={{ background: location }}
+            className={styles.link}>
+            <div ref={dragTarget} className={styles.ingredient_card}>
                 {count ? <Counter count={count} /> : null}
                 <img
                     alt={`Ингредиент для бургера: ${name}`}
@@ -37,7 +39,7 @@ const IngredientCard = ({ ingredient }) => {
                 </div>
                 <div className="text text_type_main-default">{name}</div>
             </div>
-        </>
+        </Link>
     );
 };
 
