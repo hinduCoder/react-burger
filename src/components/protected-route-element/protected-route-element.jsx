@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { saveRoute } from '../../services/route';
 import { useEffect } from 'react';
 import { loadUser } from '../../services/auth';
+import PropTypes from 'prop-types';
 
 const ProtectedRouteElement = ({ element }) => {
     const { currentUser, userLoaded } = useSelector(store => store.auth);
@@ -25,6 +26,10 @@ const ProtectedRouteElement = ({ element }) => {
     }
 
     return element;
+};
+
+ProtectedRouteElement.propTypes = {
+    element: PropTypes.element.isRequired
 };
 
 export default ProtectedRouteElement;
