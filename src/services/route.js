@@ -8,9 +8,12 @@ const slice = createSlice({
     reducers: {
         saveRoute(state, action) {
             state.redirectedFrom = action.payload;
+        },
+        clearRoute(state) {
+            state.redirectedFrom = null;
         }
     }
 });
 
-export const { saveRoute } = slice.actions;
+export const { saveRoute, clearRoute } = slice.actions;
 export default slice.reducer;
