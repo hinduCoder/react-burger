@@ -21,7 +21,8 @@ const ResetPasswordPage = () => {
 
     usePageTitle('Сброс пароля');
 
-    const resetPassword = async () => {
+    const resetPassword = async e => {
+        e.preventDefault();
         await dispatch(confirmResetPassword({ password, confirmationCode }));
         navigate('/login');
     };
@@ -36,26 +37,27 @@ const ResetPasswordPage = () => {
                 <h2 className="text text_type_main-medium">
                     Восстановление пароля
                 </h2>
-                <PasswordInput
-                    placeholder="Введите новый пароль"
-                    extraClass="mt-6"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                />
-                <Input
-                    placeholder="Введите код из письма"
-                    extraClass="mt-6"
-                    value={confirmationCode}
-                    onChange={e => setConfirmationCode(e.target.value)}
-                />
-                <Button
-                    extraClass="mt-6"
-                    htmlType="button"
-                    type="primary"
-                    size="medium"
-                    onClick={resetPassword}>
-                    Сохранить
-                </Button>
+                <form onSubmit={resetPassword}>
+                    <PasswordInput
+                        placeholder="Введите новый пароль"
+                        extraClass="mt-6"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                    <Input
+                        placeholder="Введите код из письма"
+                        extraClass="mt-6"
+                        value={confirmationCode}
+                        onChange={e => setConfirmationCode(e.target.value)}
+                    />
+                    <Button
+                        extraClass="mt-6"
+                        htmlType="submit"
+                        type="primary"
+                        size="medium">
+                        Сохранить
+                    </Button>
+                </form>
                 <p className="mt-20 text text_type_main-default text_color_inactive">
                     Вспомнили пароль?{' '}
                     <Link className={styles.link} to="/login">

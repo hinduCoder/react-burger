@@ -21,7 +21,8 @@ const RegisterPage = () => {
 
     usePageTitle('Регистрация');
 
-    const onRegisterClick = () => {
+    const submit = e => {
+        e.preventDefault();
         dispatch(
             register({
                 name,
@@ -39,31 +40,32 @@ const RegisterPage = () => {
         <main className={styles.main}>
             <section className={styles.container}>
                 <h2 className="text text_type_main-medium">Регистрация</h2>
-                <Input
-                    extraClass="mt-6"
-                    placeholder="Имя"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                />
-                <EmailInput
-                    extraClass="mt-6"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                />
-                <PasswordInput
-                    extraClass="mt-6"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    icon="ShowIcon"
-                />
-                <Button
-                    extraClass="mt-6"
-                    htmlType="button"
-                    type="primary"
-                    size="medium"
-                    onClick={onRegisterClick}>
-                    Зарегистрироваться
-                </Button>
+                <form onSubmit={submit}>
+                    <Input
+                        extraClass="mt-6"
+                        placeholder="Имя"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                    />
+                    <EmailInput
+                        extraClass="mt-6"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                    <PasswordInput
+                        extraClass="mt-6"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        icon="ShowIcon"
+                    />
+                    <Button
+                        extraClass="mt-6"
+                        htmlType="submit"
+                        type="primary"
+                        size="medium">
+                        Зарегистрироваться
+                    </Button>
+                </form>
                 <p className="mt-20 text text_type_main-default text_color_inactive">
                     Уже зарегистрированы?{' '}
                     <Link className={styles.link} to="/login">
