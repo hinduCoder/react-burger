@@ -3,7 +3,6 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../services/auth';
 import { usePageTitle } from '../../utils/hooks';
-import { clearRoute } from '../../services/route';
 
 const profileLinks = [
     { route: '/profile', text: 'Профиль' },
@@ -18,7 +17,6 @@ const ProfilePage = () => {
 
     const signOut = async () => {
         await dispatch(logout());
-        dispatch(clearRoute());
         navigate('/login');
     };
     return (

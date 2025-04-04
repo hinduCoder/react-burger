@@ -1,6 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveRoute } from '../../services/route';
 import { useEffect } from 'react';
 import { loadUser } from '../../services/auth';
 import PropTypes from 'prop-types';
@@ -21,8 +20,7 @@ const ProtectedRouteElement = ({ element }) => {
     }
 
     if (!currentUser) {
-        dispatch(saveRoute(location));
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
     return element;

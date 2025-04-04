@@ -3,10 +3,10 @@ import {
     EmailInput,
     PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import styles from './login.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../../services/auth';
 import { usePageTitle } from '../../utils/hooks';
 
@@ -16,7 +16,7 @@ const LoginPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const redirectedFrom = useSelector(state => state.route.redirectedFrom);
+    const location = useLocation();
 
     usePageTitle('Авторизация');
 
@@ -29,7 +29,7 @@ const LoginPage = () => {
             })
         ).then(result => {
             if (!result.error) {
-                navigate(redirectedFrom ?? '/', {
+                navigate(location.state?.from ?? '/', {
                     replace: true
                 });
             }
