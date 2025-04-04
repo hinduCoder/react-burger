@@ -4,7 +4,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-card.module.css';
 import { useDrag } from 'react-dnd';
-import { useDispatch } from 'react-redux';
 import itemType from '../../utils/data.proptypes';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -15,7 +14,6 @@ const IngredientCard = ({ ingredient }) => {
     });
 
     const location = useLocation();
-    const dispatch = useDispatch();
 
     const { count, name, image, price } = ingredient;
     return (
