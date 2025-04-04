@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { orderApiUrl, apiRequest } from '../utils/api';
+import { orderApiPath, apiRequest } from '../utils/api';
 
 const makeOrder = createAsyncThunk('order/submit', async ids => {
-    const result = await apiRequest(orderApiUrl, {
+    const result = await apiRequest(orderApiPath, {
         method: 'POST',
         body: JSON.stringify({
             ingredients: ids
