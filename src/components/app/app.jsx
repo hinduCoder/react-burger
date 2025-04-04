@@ -2,7 +2,6 @@ import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import MainPage from '../../pages/main/main';
-import AnonymousRouteElement from '../anonymous-route-element/anonymous-route-element';
 import LoginPage from '../../pages/login/login';
 import RegisterPage from '../../pages/register/register';
 import ForgotPasswordPage from '../../pages/forgot-password/forgot-password';
@@ -48,18 +47,27 @@ function App() {
                 />
                 <Route
                     path="/login"
-                    element={<AnonymousRouteElement element={<LoginPage />} />}
+                    element={
+                        <ProtectedRouteElement
+                            anonymous
+                            element={<LoginPage />}
+                        />
+                    }
                 />
                 <Route
                     path="/register"
                     element={
-                        <AnonymousRouteElement element={<RegisterPage />} />
+                        <ProtectedRouteElement
+                            anonymous
+                            element={<RegisterPage />}
+                        />
                     }
                 />
                 <Route
                     path="/forgot-password"
                     element={
-                        <AnonymousRouteElement
+                        <ProtectedRouteElement
+                            anonymous
                             element={<ForgotPasswordPage />}
                         />
                     }
@@ -67,7 +75,8 @@ function App() {
                 <Route
                     path="/reset-password"
                     element={
-                        <AnonymousRouteElement
+                        <ProtectedRouteElement
+                            anonymous
                             element={<ResetPasswordPage />}
                         />
                     }

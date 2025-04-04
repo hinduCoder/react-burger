@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { loadUser } from '../../services/auth';
 import PropTypes from 'prop-types';
 
-const ProtectedRouteElement = ({ element }) => {
+const ProtectedRouteElement = ({ element, anonymous = false }) => {
     const { currentUser, userLoaded } = useSelector(store => store.auth);
     const dispatch = useDispatch();
     const location = useLocation();
@@ -19,8 +19,12 @@ const ProtectedRouteElement = ({ element }) => {
         return null;
     }
 
-    if (!currentUser) {
+    if (!anonymous && !currentUser) {
         return <Navigate to="/login" state={{ from: location }} replace />;
+    }
+
+    if (anonymous && currentUser) {
+        return <Navigate to="/" replace />;
     }
 
     return element;
