@@ -100,6 +100,7 @@ const slice = createSlice({
             alert('Ошибка при регистрации пользователя');
             console.error(action.error);
             state.currentUser = null;
+            state.userLoaded = false;
         });
 
         builder.addCase(login.pending, state => {});
@@ -112,6 +113,7 @@ const slice = createSlice({
             alert('Не удалось залогиниться');
             console.error(action.error);
             state.currentUser = null;
+            state.userLoaded = false;
         });
 
         builder.addCase(loadUser.fulfilled, (state, action) => {
@@ -120,7 +122,7 @@ const slice = createSlice({
         });
         builder.addCase(loadUser.rejected, (state, action) => {
             state.currentUser = null;
-            state.userLoaded = true;
+            state.userLoaded = true; //попытка загрузки юзера была, больше не пытаемся
         });
 
         builder.addCase(editUser.fulfilled, (state, action) => {
@@ -137,6 +139,7 @@ const slice = createSlice({
 
         builder.addCase(logout.fulfilled, (state, action) => {
             state.currentUser = null;
+            state.userLoaded = false;
         });
     }
 });
