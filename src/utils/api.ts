@@ -1,3 +1,5 @@
+import { ApiResponseContent, TokenResponse } from './types';
+
 export const apiUrl = 'https://norma.nomoreparties.space/api/';
 export const ingredientsApiPath = 'ingredients';
 export const orderApiPath = 'orders';
@@ -9,11 +11,13 @@ export const logoutApiPath = 'auth/logout';
 export const startResetPasswordApiPath = 'password-reset';
 export const confirmResetPasswordApiPath = 'password-reset/reset';
 
-const hasTokenExpired = content => {
+const hasTokenExpired = (content: ApiResponseContent) => {
     return content.message === 'jwt expired';
 };
 
-const checkResponse = response => {
+const checkResponse = <T extends ApiResponseContent>(
+    response: Response
+): Promise<T> => {
     if (response.ok) {
         return response.json();
     }
@@ -23,16 +27,22 @@ const checkResponse = response => {
     return Promise.reject(`Server responded ${response.status}`);
 };
 
-const checkSuccess = response => {
+const checkSuccess = <T extends ApiResponseContent>(
+    response: T
+): Promise<T> => {
     if (response && response.success) {
-        return response;
+        return Promise.resolve(response);
     }
     return Promise.reject(
         `The response is marked as unsuccessful: ${response}`
     );
 };
 
-export const apiRequest = async (endpoint, options, withAuth = false) => {
+export async function apiRequest<T extends ApiResponseContent>(
+    endpoint: string,
+    options: RequestInit = {},
+    withAuth: boolean = false
+): Promise<T> {
     try {
         const response = await fetch(`${apiUrl}${endpoint}`, {
             ...options,
@@ -41,27 +51,32 @@ export const apiRequest = async (endpoint, options, withAuth = false) => {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
                 Authorization: withAuth
-                    ? localStorage.getItem('accessToken')
-                    : null
+                    ? (localStorage.getItem('accessToken') ?? '')
+                    : ''
             }
         });
-        const content = await checkResponse(response);
-        return await checkSuccess(content);
+        const content = await checkResponse<T>(response);
+        return checkSuccess(content);
     } catch (e) {
-        if (hasTokenExpired(e)) {
-            const tokenResponse = await apiRequest(tokenApiPath, {
-                method: 'POST',
-                body: JSON.stringify({
-                    token: localStorage.getItem('refreshToken')
-                })
-            });
+        if (hasTokenExpired(e as ApiResponseContent)) {
+            const tokenResponse = await apiRequest<TokenResponse>(
+                tokenApiPath,
+                {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        token: localStorage.getItem('refreshToken')
+                    })
+                }
+            );
             saveTokens(tokenResponse);
-            return await apiRequest(endpoint, options, withAuth);
+            return await apiRequest<T>(endpoint, options, withAuth);
+        } else {
+            throw e;
         }
     }
-};
+}
 
-export const saveTokens = tokenResponse => {
+export const saveTokens = (tokenResponse: TokenResponse) => {
     localStorage.setItem('accessToken', tokenResponse.accessToken);
     localStorage.setItem('refreshToken', tokenResponse.refreshToken);
 };

@@ -3,14 +3,19 @@ import {
     DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { moveFilling, removeFilling } from '../../services/burger-constructor';
-import { useDispatch } from 'react-redux';
 import styles from './burger-constructor-item.module.css';
 import { useDrag, useDrop } from 'react-dnd';
 import { decrementCount } from '../../services/ingredients';
-import itemType from '../../utils/data.proptypes';
+import { useAppDispatch } from '../../utils/hooks';
+import { Ingredient } from '../../utils/types';
+import { FC } from 'react';
 
-const BurgerConstructorItem = ({ item }) => {
-    const dispatch = useDispatch();
+type BurgerConstructorItemProps = {
+    item: Ingredient;
+};
+
+const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({ item }) => {
+    const dispatch = useAppDispatch();
 
     const [{ isDragging }, drag] = useDrag(
         () => ({
@@ -23,7 +28,11 @@ const BurgerConstructorItem = ({ item }) => {
         [item.localId]
     );
 
-    const [{ isHover }, drop] = useDrop(
+    const [{ isHover }, drop] = useDrop<
+        { id: string },
+        unknown,
+        { isHover: boolean }
+    >(
         () => ({
             accept: 'constructorItem',
             collect: monitor => ({
@@ -32,7 +41,7 @@ const BurgerConstructorItem = ({ item }) => {
             drop({ id: movedId }) {
                 if (movedId !== item.localId) {
                     dispatch(
-                        moveFilling({ fromId: movedId, toId: item.localId })
+                        moveFilling({ fromId: movedId, toId: item.localId! })
                     );
                 }
             }
@@ -40,14 +49,14 @@ const BurgerConstructorItem = ({ item }) => {
         []
     );
 
-    const removeIngredient = item => {
-        dispatch(removeFilling(item.localId));
+    const removeIngredient = (item: Ingredient) => {
+        dispatch(removeFilling(item.localId!));
         dispatch(decrementCount(item._id));
     };
     return (
         <div
             className={styles.constructor_item}
-            ref={element => drag(drop(element))}
+            ref={element => void drag(drop(element))}
             style={{ opacity: isDragging || isHover ? 0.3 : 1 }}>
             <DragIcon type="primary" />
             <ConstructorElement
@@ -58,10 +67,6 @@ const BurgerConstructorItem = ({ item }) => {
             />
         </div>
     );
-};
-
-BurgerConstructorItem.propTypes = {
-    item: itemType
 };
 
 export default BurgerConstructorItem;

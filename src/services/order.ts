@@ -1,22 +1,26 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { orderApiPath, apiRequest } from '../utils/api';
+import { OrderApiResponse } from '../utils/types';
 
-const makeOrder = createAsyncThunk('order/submit', async ids => {
-    const result = await apiRequest(orderApiPath, {
-        method: 'POST',
-        body: JSON.stringify({
-            ingredients: ids
-        })
-    });
-    return result.order.number;
-});
+const makeOrder = createAsyncThunk(
+    'order/submit',
+    async (ids: Array<string>) => {
+        const result = await apiRequest<OrderApiResponse>(orderApiPath, {
+            method: 'POST',
+            body: JSON.stringify({
+                ingredients: ids
+            })
+        });
+        return result.order.number;
+    }
+);
 
 const slice = createSlice({
     name: 'order',
     initialState: {
         loading: false,
         showOrderInfo: false,
-        number: null
+        number: null as number | null
     },
     reducers: {
         closeOrderInfo(state) {
@@ -29,11 +33,14 @@ const slice = createSlice({
             state.loading = true;
             state.number = null;
         });
-        builder.addCase(makeOrder.fulfilled, (state, action) => {
-            state.number = action.payload;
-            state.showOrderInfo = true;
-            state.loading = false;
-        });
+        builder.addCase(
+            makeOrder.fulfilled,
+            (state, action: PayloadAction<number>) => {
+                state.number = action.payload;
+                state.showOrderInfo = true;
+                state.loading = false;
+            }
+        );
         builder.addCase(makeOrder.rejected, (state, action) => {
             alert('Не удалось создать заказ');
             console.error(action.error);

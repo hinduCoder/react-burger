@@ -1,21 +1,25 @@
 import styles from './ingredient-details.module.css';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { usePageTitle } from '../../utils/hooks';
+import { useAppSelector, usePageTitle } from '../../utils/hooks';
+import { FC } from 'react';
 
-const IngredientDetails = ({ compact }) => {
+type IngredientDetailsProps = {
+    compact?: boolean;
+};
+
+const IngredientDetails: FC<IngredientDetailsProps> = ({ compact }) => {
     usePageTitle('Ингредиент');
     const { id } = useParams();
     const { name, image_large, proteins, fat, carbohydrates, calories } =
-        useSelector(
+        useAppSelector(
             store =>
                 store.ingredients.list.find(
                     ingredient => ingredient._id === id
-                ) ?? {}
+                )!
         );
 
     return (
-        <section className={!compact ? 'mt-30' : null}>
+        <section className={!compact ? 'mt-30' : ''}>
             {!compact && (
                 <h2 className="text text_type_main-large">
                     Детали ингредиента

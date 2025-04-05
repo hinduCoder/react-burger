@@ -14,13 +14,13 @@ import NotFoundPage from '../../pages/not-found/not-found';
 import React, { useEffect } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
-import { useDispatch, useSelector } from 'react-redux';
 import { loadData } from '../../services/ingredients';
 import { loadUser } from '../../services/auth';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 function App() {
-    const userLoaded = useSelector(store => store.auth.userLoaded);
-    const dispatch = useDispatch();
+    const userLoaded = useAppSelector(store => store.auth.userLoaded);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(loadData());
@@ -49,7 +49,7 @@ function App() {
                     path="/login"
                     element={
                         <ProtectedRouteElement
-                            anonymous
+                            mode="anonymous"
                             element={<LoginPage />}
                         />
                     }
@@ -58,7 +58,7 @@ function App() {
                     path="/register"
                     element={
                         <ProtectedRouteElement
-                            anonymous
+                            mode="anonymous"
                             element={<RegisterPage />}
                         />
                     }
@@ -67,7 +67,7 @@ function App() {
                     path="/forgot-password"
                     element={
                         <ProtectedRouteElement
-                            anonymous
+                            mode="anonymous"
                             element={<ForgotPasswordPage />}
                         />
                     }
@@ -76,7 +76,7 @@ function App() {
                     path="/reset-password"
                     element={
                         <ProtectedRouteElement
-                            anonymous
+                            mode="anonymous"
                             element={<ResetPasswordPage />}
                         />
                     }
@@ -84,13 +84,19 @@ function App() {
                 <Route
                     path="/profile"
                     element={
-                        <ProtectedRouteElement element={<ProfilePage />} />
+                        <ProtectedRouteElement
+                            mode="authorized"
+                            element={<ProfilePage />}
+                        />
                     }>
                     <Route path="/profile" element={<ProfileData />} />
                     <Route
                         path="/profile/orders"
                         element={
-                            <ProtectedRouteElement element={<OrderHistory />} />
+                            <ProtectedRouteElement
+                                mode="authorized"
+                                element={<OrderHistory />}
+                            />
                         }
                     />
                 </Route>

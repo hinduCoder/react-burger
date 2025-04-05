@@ -1,10 +1,10 @@
 import orderDoneImage from '../../images/order-done.svg';
 import styles from './order-details.module.css';
-import { useSelector } from 'react-redux';
 import { RevolvingDot } from 'react-loader-spinner';
+import { useAppSelector } from '../../utils/hooks';
 
 const OrderDetails = () => {
-    const { number, loading } = useSelector(store => store.order);
+    const { number, loading } = useAppSelector(store => store.order);
 
     if (loading) {
         return (

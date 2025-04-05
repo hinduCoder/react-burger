@@ -4,18 +4,21 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-card.module.css';
 import { useDrag } from 'react-dnd';
-import { useDispatch } from 'react-redux';
-import itemType from '../../utils/data.proptypes';
 import { Link, useLocation } from 'react-router-dom';
+import { Ingredient } from '../../utils/types';
+import { FC } from 'react';
 
-const IngredientCard = ({ ingredient }) => {
+type IngredientCardProps = {
+    ingredient: Ingredient;
+};
+
+const IngredientCard: FC<IngredientCardProps> = ({ ingredient }) => {
     const [, dragTarget] = useDrag({
         type: 'ingredient',
         item: { ingredient }
     });
 
     const location = useLocation();
-    const dispatch = useDispatch();
 
     const { count, name, image, price } = ingredient;
     return (
@@ -24,7 +27,9 @@ const IngredientCard = ({ ingredient }) => {
             key={ingredient._id}
             state={{ background: location }}
             className={styles.link}>
-            <div ref={dragTarget} className={styles.ingredient_card}>
+            <div
+                ref={element => void dragTarget(element)}
+                className={styles.ingredient_card}>
                 {count ? <Counter count={count} /> : null}
                 <img
                     alt={`Ингредиент для бургера: ${name}`}
@@ -41,10 +46,6 @@ const IngredientCard = ({ ingredient }) => {
             </div>
         </Link>
     );
-};
-
-IngredientCard.propTypes = {
-    ingredient: itemType
 };
 
 export default IngredientCard;

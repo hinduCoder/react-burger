@@ -6,9 +6,16 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import { NavLink } from 'react-router-dom';
+import { FC } from 'react';
+import { TIconProps } from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils';
 
 const AppHeader = () => {
-    const renderLink = (path, text, Icon, end = false) => {
+    const renderLink = (
+        path: string,
+        text: string,
+        Icon: FC<TIconProps>,
+        end: boolean = false
+    ) => {
         return (
             <NavLink
                 to={path}
