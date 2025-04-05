@@ -1,29 +1,28 @@
 import styles from './forgot-password.module.css';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import {
     Button,
     EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { usePageTitle } from '../../utils/hooks';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch, usePageTitle } from '../../utils/hooks';
 import { startResetPassword } from '../../services/auth';
 
 const ForgotPasswordPage = () => {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     usePageTitle('Восстановление пароля');
 
-    const restorePassword = async e => {
+    const restorePassword = async (e: FormEvent) => {
         e.preventDefault();
-        await dispatch(startResetPassword(email));
+        await dispatch(startResetPassword(email)).unwrap();
         navigate('/reset-password');
     };
     return (
         <main className={styles.main}>
-            <section className={styles.container} >
+            <section className={styles.container}>
                 <h2 className="text text_type_main-medium">
                     Восстановление пароля
                 </h2>

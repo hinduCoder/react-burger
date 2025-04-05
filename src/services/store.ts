@@ -4,7 +4,7 @@ import ingredients from './ingredients';
 import burgerConstructor from './burger-constructor';
 import auth from './auth';
 
-export default configureStore({
+const store = configureStore({
     reducer: {
         burgerConstructor,
         ingredients,
@@ -13,3 +13,8 @@ export default configureStore({
     },
     devTools: true
 });
+
+export default store;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

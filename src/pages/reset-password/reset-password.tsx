@@ -1,29 +1,34 @@
 import styles from './reset-password.module.css';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import {
     Button,
     Input,
     PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { usePageTitle } from '../../utils/hooks';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+    useAppDispatch,
+    useAppSelector,
+    usePageTitle
+} from '../../utils/hooks';
 import { confirmResetPassword } from '../../services/auth';
 
 const ResetPasswordPage = () => {
     const [password, setPassword] = useState('');
     const [confirmationCode, setConfirmationCode] = useState('');
 
-    const resetting = useSelector(state => state.auth.resettingPassword);
-    const dispatch = useDispatch();
+    const resetting = useAppSelector(state => state.auth.resettingPassword);
+    const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
 
     usePageTitle('Сброс пароля');
 
-    const resetPassword = async e => {
+    const resetPassword = async (e: FormEvent) => {
         e.preventDefault();
-        await dispatch(confirmResetPassword({ password, confirmationCode }));
+        await dispatch(
+            confirmResetPassword({ password, confirmationCode })
+        ).unwrap();
         navigate('/login');
     };
 
@@ -49,6 +54,8 @@ const ResetPasswordPage = () => {
                         extraClass="mt-6"
                         value={confirmationCode}
                         onChange={e => setConfirmationCode(e.target.value)}
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
                     />
                     <Button
                         extraClass="mt-6"

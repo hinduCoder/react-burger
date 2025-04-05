@@ -1,32 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v7 as uuid } from 'uuid';
+import { Ingredient } from '../utils/types';
+
 const slice = createSlice({
     name: 'burgerConstructor',
     initialState: {
-        bun: null,
-        fillings: []
+        bun: null as Ingredient | null,
+        fillings: [] as Array<Ingredient>
     },
     reducers: {
-        setBun(state, action) {
+        setBun(state, action: PayloadAction<Ingredient>) {
             state.bun = action.payload;
         },
         addFilling: {
-            reducer(state, action) {
+            reducer(state, action: PayloadAction<Ingredient>) {
                 state.fillings.push({
                     ...action.payload
                 });
             },
-            prepare(payload) {
+            prepare(payload: Ingredient) {
                 const id = uuid();
                 return { payload: { ...payload, localId: id } };
             }
         },
-        removeFilling(state, action) {
+        removeFilling(state, action: PayloadAction<string>) {
             state.fillings = state.fillings.filter(
                 item => item.localId !== action.payload
             );
         },
-        moveFilling(state, action) {
+        moveFilling(
+            state,
+            action: PayloadAction<{ fromId: string; toId: string }>
+        ) {
             const { fromId, toId } = action.payload;
             const sourceIndex = state.fillings.findIndex(
                 ingredient => ingredient.localId === fromId

@@ -1,14 +1,19 @@
 import styles from './modal.module.css';
 import { createPortal } from 'react-dom';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect } from 'react';
+import { FC, ReactElement, useEffect } from 'react';
 
-const modalElement = document.getElementById('modal');
-const Modal = ({ header, onClose, children }) => {
+const modalElement = document.getElementById('modal')!;
+
+type ModalProps = {
+    header?: string;
+    onClose: () => void;
+    children: ReactElement;
+};
+const Modal: FC<ModalProps> = ({ header, onClose, children }) => {
     useEffect(() => {
-        const close = event => {
+        const close = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 onClose();
             }
@@ -33,11 +38,6 @@ const Modal = ({ header, onClose, children }) => {
         </ModalOverlay>,
         modalElement
     );
-};
-
-Modal.propTypes = {
-    header: PropTypes.string,
-    onClose: PropTypes.func
 };
 
 export default Modal;

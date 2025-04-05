@@ -6,7 +6,6 @@ import {
 import styles from './burger-constructor.module.css';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { addFilling, clear, setBun } from '../../services/burger-constructor';
 import { closeOrderInfo, makeOrder } from '../../services/order';
@@ -17,18 +16,19 @@ import {
     incrementCount
 } from '../../services/ingredients';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { Ingredient } from '../../utils/types';
 
 const BurgerConstructor = () => {
-    const { bun, fillings } = useSelector(store => store.burgerConstructor);
-    const { showOrderInfo } = useSelector(store => store.order);
-    const currentUser = useSelector(store => store.auth.currentUser);
+    const { bun, fillings } = useAppSelector(store => store.burgerConstructor);
+    const { showOrderInfo } = useAppSelector(store => store.order);
+    const currentUser = useAppSelector(store => store.auth.currentUser);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const [, dropTarget] = useDrop({
+    const [, dropTarget] = useDrop<{ ingredient: Ingredient }>({
         accept: 'ingredient',
-
         drop({ ingredient }) {
             if (ingredient.type === 'bun') {
                 if (bun) {
@@ -50,18 +50,18 @@ const BurgerConstructor = () => {
             navigate('/login');
             return;
         }
-        dispatch(makeOrder([bun._id, ...fillings.map(f => f._id)])).then(
-            result => {
-                if (!result.error) {
-                    dispatch(clear());
-                    dispatch(clearCounters());
-                }
-            }
-        );
+        dispatch(makeOrder([bun!._id, ...fillings.map(f => f._id)]))
+            .unwrap()
+            .then(() => {
+                dispatch(clear());
+                dispatch(clearCounters());
+            });
     };
 
     return (
-        <section ref={dropTarget} className={styles.burger_constructor}>
+        <section
+            ref={element => void dropTarget(element)}
+            className={styles.burger_constructor}>
             <div>
                 {bun && (
                     <ConstructorElement

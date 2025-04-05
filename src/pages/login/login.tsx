@@ -1,52 +1,45 @@
-import styles from './register.module.css';
-import { useState } from 'react';
 import {
     Button,
     EmailInput,
-    Input,
     PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { register } from '../../services/auth';
-import { usePageTitle } from '../../utils/hooks';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FormEvent, useState } from 'react';
+import styles from './login.module.css';
+import { login } from '../../services/auth';
+import { useAppDispatch, usePageTitle } from '../../utils/hooks';
 
-const RegisterPage = () => {
-    const [name, setName] = useState('');
+const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
-    usePageTitle('Регистрация');
+    usePageTitle('Авторизация');
 
-    const submit = e => {
+    const submit = (e: FormEvent) => {
         e.preventDefault();
         dispatch(
-            register({
-                name,
+            login({
                 email,
                 password
             })
-        ).then(result => {
-            if (!result.error) {
-                navigate('/');
-            }
-        });
+        )
+            .unwrap()
+            .then(() => {
+                navigate(location.state?.from ?? '/', {
+                    replace: true
+                });
+            });
     };
 
     return (
         <main className={styles.main}>
             <section className={styles.container}>
-                <h2 className="text text_type_main-medium">Регистрация</h2>
+                <h2 className="text text_type_main-medium">Вход</h2>
                 <form onSubmit={submit}>
-                    <Input
-                        extraClass="mt-6"
-                        placeholder="Имя"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                    />
                     <EmailInput
                         extraClass="mt-6"
                         value={email}
@@ -63,13 +56,19 @@ const RegisterPage = () => {
                         htmlType="submit"
                         type="primary"
                         size="medium">
-                        Зарегистрироваться
+                        Войти
                     </Button>
                 </form>
                 <p className="mt-20 text text_type_main-default text_color_inactive">
-                    Уже зарегистрированы?{' '}
-                    <Link className={styles.link} to="/login">
-                        Войти
+                    Вы — новый пользователь?{' '}
+                    <Link className={styles.link} to="/register">
+                        Зарегистрироваться
+                    </Link>
+                </p>
+                <p className="mt-4 text text_type_main-default text_color_inactive">
+                    Забыли пароль?{' '}
+                    <Link className={styles.link} to="/forgot-password">
+                        Восстановить пароль
                     </Link>
                 </p>
             </section>
@@ -77,4 +76,4 @@ const RegisterPage = () => {
     );
 };
 
-export default RegisterPage;
+export default LoginPage;

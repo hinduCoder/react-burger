@@ -1,27 +1,39 @@
+import { UIEvent } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { useRef, useState } from 'react';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../utils/hooks';
+import { IngredientType } from '../../utils/types';
 
-const ingredientTypes = [
+type TabModel = {
+    type: IngredientType;
+    label: string;
+};
+
+type TabsRef = {
+    [key in IngredientType]: HTMLElement;
+};
+
+const ingredientTypes: TabModel[] = [
     { type: 'bun', label: 'Булки' },
     { type: 'sauce', label: 'Соусы' },
     { type: 'main', label: 'Начинки' }
 ];
 
 const BurgerIngredients = () => {
-    const ingredients = useSelector(store => store.ingredients.list);
+    const ingredients = useAppSelector(store => store.ingredients.list);
 
     const [selectedIngredientType, setSelectedIngredientType] = useState('bun');
-    const ingredientTypeHeaderRefs = useRef({});
+    // @ts-ignore
+    const ingredientTypeHeaderRefs = useRef<TabsRef>({});
 
-    const onListScroll = e => {
+    const onListScroll = (e: UIEvent<HTMLElement>) => {
         const currentTab = Object.keys(
             ingredientTypeHeaderRefs.current
         ).findLast(
-            tab =>
-                e.target.getBoundingClientRect().y -
+            (tab: IngredientType) =>
+                (e.target as HTMLElement).getBoundingClientRect().y -
                     ingredientTypeHeaderRefs.current[
                         tab
                     ].getBoundingClientRect().y >=
@@ -32,7 +44,7 @@ const BurgerIngredients = () => {
         }
     };
 
-    const onTabClick = tab => {
+    const onTabClick = (tab: TabModel) => {
         setSelectedIngredientType(tab.type);
         ingredientTypeHeaderRefs.current[tab.type].scrollIntoView({
             behavior: 'smooth'
@@ -62,9 +74,9 @@ const BurgerIngredients = () => {
                     <div
                         key={ingredientType.type}
                         ref={element =>
-                            (ingredientTypeHeaderRefs.current[
+                            void (ingredientTypeHeaderRefs.current[
                                 ingredientType.type
-                            ] = element)
+                            ] = element!)
                         }>
                         <h2
                             className={`text text_type_main-medium ${styles.heading}`}>

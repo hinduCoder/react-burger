@@ -1,24 +1,29 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { apiRequest, ingredientsApiPath } from '../utils/api';
+import { Ingredient, IngredientsApiResponse } from '../utils/types';
 
 const loadData = createAsyncThunk('ingredients/loadData', async () => {
-    const result = await apiRequest(ingredientsApiPath);
+    const result = await apiRequest<IngredientsApiResponse>(ingredientsApiPath);
     return result.data;
 });
 
 const slice = createSlice({
     name: 'ingredients',
     initialState: {
-        list: []
+        list: [] as Array<Ingredient>
     },
     reducers: {
-        incrementCount(state, action) {
-            state.list.find(ingredient => ingredient._id === action.payload)
-                .count++;
+        incrementCount(state, action: PayloadAction<string>) {
+            const ingredient = state.list.find(
+                ingredient => ingredient._id === action.payload
+            );
+            ingredient && ingredient.count++;
         },
-        decrementCount(state, action) {
-            state.list.find(ingredient => ingredient._id === action.payload)
-                .count--;
+        decrementCount(state, action: PayloadAction<string>) {
+            const ingredient = state.list.find(
+                ingredient => ingredient._id === action.payload
+            );
+            ingredient && ingredient.count--;
         },
         clearCounters(state) {
             state.list.forEach(ingredient => (ingredient.count = 0));

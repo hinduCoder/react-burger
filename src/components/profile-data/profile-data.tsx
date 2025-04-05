@@ -3,14 +3,15 @@ import {
     Input,
     PasswordInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { editUser, loadUser } from '../../services/auth';
 import styles from './profile-data.module.css';
+import { EditUserApiRequest } from '../../utils/types';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 const ProfileData = () => {
-    const currentUser = useSelector(store => store.auth.currentUser);
-    const dispatch = useDispatch();
+    const currentUser = useAppSelector(store => store.auth.currentUser);
+    const dispatch = useAppDispatch();
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -27,16 +28,16 @@ const ProfileData = () => {
         dispatch(loadUser());
     }, [dispatch]);
 
-    const resetForm = e => {
+    const resetForm = (e: FormEvent) => {
         e.preventDefault();
-        setName(currentUser.name);
-        setEmail(currentUser.email);
+        setName(currentUser?.name ?? '');
+        setEmail(currentUser?.email ?? '');
         setPassword('');
         setIsDirty(false);
     };
-    const submitForm = e => {
+    const submitForm = (e: FormEvent) => {
         e.preventDefault();
-        const updatedData = {
+        const updatedData: EditUserApiRequest = {
             email,
             name
         };
@@ -56,6 +57,8 @@ const ProfileData = () => {
                     setName(e.target.value);
                     setIsDirty(true);
                 }}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
             />
             <Input
                 extraClass="mt-6"
@@ -66,6 +69,8 @@ const ProfileData = () => {
                     setEmail(e.target.value);
                     setIsDirty(true);
                 }}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
             />
             <PasswordInput
                 extraClass="mt-6"
