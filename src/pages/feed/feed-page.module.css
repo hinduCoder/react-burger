@@ -1,0 +1,17 @@
+.header {
+    text-align: left;
+    margin-left: 80px;
+}
+.content {
+    display: flex;
+    justify-content: center;
+    column-gap: 60px;
+}
+
+.feed {
+    width: 600px;
+}
+
+.stats { 
+    width: 580px;
+}

@@ -1,0 +1,7 @@
+.history {
+    composes: cool-scrollbar from '../../styles/scrollbar.module.css';
+    
+    /*width: 600px;*/
+    overflow-x: hidden;
+    overflow-y: auto;
+}

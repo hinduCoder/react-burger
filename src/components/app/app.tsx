@@ -9,7 +9,6 @@ import ResetPasswordPage from '../../pages/reset-password/reset-password';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import ProfilePage from '../../pages/profile/profile';
 import ProfileData from '../profile-data/profile-data';
-import OrderHistory from '../order-history/order-history';
 import NotFoundPage from '../../pages/not-found/not-found';
 import React, { useEffect } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -17,6 +16,8 @@ import Modal from '../modal/modal';
 import { loadData } from '../../services/ingredients';
 import { loadUser } from '../../services/auth';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import FeedPage from '../../pages/feed/feed-page';
+import ProfileOrderHistory from '../profile-order-history/profile-order-history';
 
 function App() {
     const userLoaded = useAppSelector(store => store.auth.userLoaded);
@@ -95,11 +96,12 @@ function App() {
                         element={
                             <ProtectedRouteElement
                                 mode="authorized"
-                                element={<OrderHistory />}
+                                element={<ProfileOrderHistory />}
                             />
                         }
                     />
                 </Route>
+                <Route path="/feed" element={<FeedPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
 

@@ -76,6 +76,10 @@ export async function apiRequest<T extends ApiResponseContent>(
     }
 }
 
+export const getAccessToken = () => {
+    return localStorage.getItem('accessToken')?.replace('Bearer ', '');
+};
+
 export const saveTokens = (tokenResponse: TokenResponse) => {
     localStorage.setItem('accessToken', tokenResponse.accessToken);
     localStorage.setItem('refreshToken', tokenResponse.refreshToken);

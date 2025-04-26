@@ -5,12 +5,16 @@ import { OrderApiResponse } from '../utils/types';
 const makeOrder = createAsyncThunk(
     'order/submit',
     async (ids: Array<string>) => {
-        const result = await apiRequest<OrderApiResponse>(orderApiPath, {
-            method: 'POST',
-            body: JSON.stringify({
-                ingredients: ids
-            })
-        });
+        const result = await apiRequest<OrderApiResponse>(
+            orderApiPath,
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    ingredients: ids
+                })
+            },
+            true
+        );
         return result.order.number;
     }
 );
