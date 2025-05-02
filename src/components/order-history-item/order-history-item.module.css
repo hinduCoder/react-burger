@@ -1,0 +1,59 @@
+.card {
+    padding: 24px;
+    margin-bottom: 24px;
+    border-radius: 40px;
+    background-color: #1C1C21;
+    cursor: pointer;
+}
+
+.card_header {
+    display: flex; 
+    justify-content: space-between;
+}
+
+.short_details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.ingredient_icon_border {
+    width: 64px;
+    height: 64px;
+    background-image: linear-gradient(to right, #801AB2, #4C4CFF);
+    border-radius: 50%;
+}
+
+.ingredient_icon {
+    width: 60px;
+    height: 60px;
+    box-sizing: content-box;
+    transform: translate(2px, 2px);
+    border-radius: 50%;
+    background-color: #131316;
+    text-align: center;
+    position: relative;
+}
+
+.ingredient_icon > img {
+    height: 56px;
+    transform: translate(-25px, 2px);
+}
+
+.ingredient_icon > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}

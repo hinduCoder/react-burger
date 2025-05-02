@@ -49,7 +49,6 @@ const ProfilePage = () => {
             <section className={styles.outlet}>
                 <Outlet />
             </section>
-            <section className={styles.side_panel} />
         </main>
     );
 };

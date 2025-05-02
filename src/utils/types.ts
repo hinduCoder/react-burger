@@ -16,6 +16,18 @@ export type Ingredient = {
 
 export type IngredientType = 'bun' | 'main' | 'sauce';
 
+export type Order = {
+    _id: string;
+    ingredients: Array<string>;
+    status: OrderStatus;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: number;
+};
+
+export type OrderStatus = 'created' | 'pending' | 'done';
+
 export type User = {
     email: string;
     name: string;
@@ -62,4 +74,10 @@ export interface LoginApiResponse extends TokenResponse {
 
 export interface UserResponse extends ApiResponseContent {
     user: User;
+}
+
+export interface OrderHistoryResponse extends ApiResponseContent {
+    orders: Array<Order>;
+    total: number;
+    totalToday: number;
 }

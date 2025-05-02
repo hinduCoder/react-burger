@@ -1,0 +1,11 @@
+.stats {
+    text-align: left;
+}
+.orders {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.in_progress {
+    color: #00CCCC;
+}
