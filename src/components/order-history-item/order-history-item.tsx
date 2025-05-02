@@ -6,9 +6,10 @@ import { Order } from '../../utils/types';
 
 type OrderHistoryItemProps = {
     order: Order;
+    onClick?: (number: number) => void;
 };
 
-const OrderHistoryItem: FC<OrderHistoryItemProps> = ({ order }) => {
+const OrderHistoryItem: FC<OrderHistoryItemProps> = ({ order, onClick }) => {
     const ingredients = useAppSelector(store => store.ingredients.list);
 
     const images = useMemo(() => {
@@ -17,18 +18,22 @@ const OrderHistoryItem: FC<OrderHistoryItemProps> = ({ order }) => {
         );
     }, [order, ingredients]);
 
-    const sum = useMemo(() => {
-        return order.ingredients.reduce(
-            (sum, id) =>
-                sum +
-                    ingredients.find(ingredient => ingredient._id === id)
-                        ?.price ?? 0,
-            0
-        );
-    }, [order, ingredients]);
+    const sum = useMemo(
+        () =>
+            order.ingredients.reduce(
+                (sum, id) =>
+                    sum +
+                    (ingredients.find(ingredient => ingredient._id === id)
+                        ?.price ?? 0),
+                0
+            ),
+        [order, ingredients]
+    );
 
     return (
-        <section className={styles.card}>
+        <section
+            className={styles.card}
+            onClick={() => onClick?.(order.number)}>
             <div className={styles.card_header}>
                 <span className="text text_type_digits-default">
                     #{order.number}

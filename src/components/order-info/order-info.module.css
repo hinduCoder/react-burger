@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    width: 640px;
+    text-align: left;
+}
+.status {
+    color: #00CCCC;
+}
+
+.ingredients {
+    composes: cool-scrollbar from '../../styles/scrollbar.module.css';
+    height: 300px;
+    overflow-y: auto;
+
+    margin-top: 24px;
+    margin-bottom: 40px;
+}
+
+.ingredient {
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+    gap: 16px;
+    margin-right: 24px;
+    margin-bottom: 16px;
+}
+
+.ingredient_name {
+    flex-grow: 1;
+}
+
+.ingredient_icon {
+    width: 64px;
+    height: 64px;
+    box-sizing: border-box;
+    border: 2px solid #4C4CFF;
+    border-radius: 50%;
+    background-color: #131316;
+    text-align: center;
+}
+
+.ingredient_icon > img {
+    height: 56px;
+    transform: translate(-24px, 4px);
+}
+
+.summary {
+    display: flex;
+    justify-content: space-between;
+}

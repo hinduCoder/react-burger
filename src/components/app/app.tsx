@@ -18,6 +18,7 @@ import { loadUser } from '../../services/auth';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 import FeedPage from '../../pages/feed/feed-page';
 import ProfileOrderHistory from '../profile-order-history/profile-order-history';
+import OrderInfoWrapper from '../order-info-wrapper/order-info-wrapper';
 
 function App() {
     const userLoaded = useAppSelector(store => store.auth.userLoaded);
@@ -101,7 +102,12 @@ function App() {
                         }
                     />
                 </Route>
+                <Route
+                    path="/profile/orders/:number"
+                    element={<OrderInfoWrapper />}
+                />
                 <Route path="/feed" element={<FeedPage />} />
+                <Route path="/feed/:number" element={<OrderInfoWrapper />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
 

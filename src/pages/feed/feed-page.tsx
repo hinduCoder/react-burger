@@ -4,14 +4,20 @@ import { connect } from '../../services/feed';
 import OrderHistory from '../../components/order-history/order-history';
 import FeedStatistics from '../../components/feed-statistics/feed-statistics';
 import styles from './feed-page.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const FeedPage: FC = () => {
     const orders = useAppSelector(store => store.feed.orders);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(connect());
     }, [dispatch]);
+
+    const onItemClick = (number: number) => {
+        navigate(number.toString());
+    };
 
     return (
         <main>
@@ -20,7 +26,7 @@ const FeedPage: FC = () => {
             </h1>
             <section className={styles.content}>
                 <section className={styles.feed}>
-                    <OrderHistory orders={orders} />
+                    <OrderHistory orders={orders} onItemClick={onItemClick} />
                 </section>
                 <section className={styles.stats}>
                     <FeedStatistics />

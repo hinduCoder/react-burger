@@ -10,13 +10,16 @@ type IngredientDetailsProps = {
 const IngredientDetails: FC<IngredientDetailsProps> = ({ compact }) => {
     usePageTitle('Ингредиент');
     const { id } = useParams();
+    const ingredient = useAppSelector(
+        store =>
+            store.ingredients.list.find(ingredient => ingredient._id === id)!
+    );
+    if (!ingredient) {
+        return null;
+    }
+
     const { name, image_large, proteins, fat, carbohydrates, calories } =
-        useAppSelector(
-            store =>
-                store.ingredients.list.find(
-                    ingredient => ingredient._id === id
-                )!
-        );
+        ingredient;
 
     return (
         <section className={!compact ? 'mt-30' : ''}>
