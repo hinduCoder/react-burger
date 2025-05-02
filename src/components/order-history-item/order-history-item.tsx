@@ -4,6 +4,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useAppSelector } from '../../utils/hooks';
 import { Order } from '../../utils/types';
 import { Link, useLocation } from 'react-router-dom';
+import { toRelativeDateTimeString } from '../../utils/date-utils';
 
 type OrderHistoryItemProps = {
     order: Order;
@@ -42,7 +43,7 @@ const OrderHistoryItem: FC<OrderHistoryItemProps> = ({ order }) => {
                         #{order.number}
                     </span>
                     <span className="text text_type_main-default text_color_inactive">
-                        {order.createdAt}
+                        {toRelativeDateTimeString(order.createdAt)}
                     </span>
                 </div>
                 <h2 className="mt-6 mb-6 text text_type_main-medium">

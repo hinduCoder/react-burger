@@ -3,6 +3,7 @@ import { FC, useMemo } from 'react';
 import styles from './order-info.module.css';
 import { useAppSelector, usePageTitle } from '../../utils/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { toRelativeDateTimeString } from '../../utils/date-utils';
 
 type TOrderInfoProps = {
     order: Order;
@@ -89,7 +90,7 @@ const OrderInfo: FC<TOrderInfoProps> = ({ order }) => {
                 </section>
                 <section className={styles.summary}>
                     <span className="text text_type_main-default text_color_inactive">
-                        {order.createdAt}
+                        {toRelativeDateTimeString(order.createdAt)}
                     </span>
                     <span className="text text_type_digits-default">
                         {sum} <CurrencyIcon type="primary" />
