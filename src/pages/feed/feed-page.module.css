@@ -1,15 +1,24 @@
+.main {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+}
+
 .header {
     text-align: left;
     margin-left: 80px;
 }
 .content {
+    overflow: hidden;
     display: flex;
     justify-content: center;
     column-gap: 60px;
 }
 
 .feed {
+    composes: cool-scrollbar from '../../styles/scrollbar.module.css';
     width: 600px;
+    overflow-y: auto;
 }
 
 .stats { 

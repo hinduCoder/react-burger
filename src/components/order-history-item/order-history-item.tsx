@@ -14,10 +14,17 @@ const OrderHistoryItem: FC<OrderHistoryItemProps> = ({ order }) => {
     const location = useLocation();
     const ingredients = useAppSelector(store => store.ingredients.list);
 
-    const images = useMemo(() => {
-        return order.ingredients.map(
+    const { images, restCount } = useMemo(() => {
+        const images = order.ingredients.map(
             id => ingredients.find(ingredient => ingredient._id === id)?.image
         );
+
+        const slicedImages = images.slice(0, 7);
+        slicedImages.reverse();
+        return {
+            images: slicedImages,
+            restCount: Math.max(images.length - 6, 0)
+        };
     }, [order, ingredients]);
 
     const sum = useMemo(
@@ -50,8 +57,12 @@ const OrderHistoryItem: FC<OrderHistoryItemProps> = ({ order }) => {
                     {order.name}
                 </h2>
                 <div className={styles.short_details}>
-                    <div className={styles.ingredients}>
-                        {images.toReversed().map((src, index) => (
+                    <div
+                        className={styles.ingredients}
+                        style={{
+                            marginRight: -16 * (images.length - 1)
+                        }}>
+                        {images.map((src, index) => (
                             <div
                                 key={index}
                                 style={{
@@ -59,7 +70,21 @@ const OrderHistoryItem: FC<OrderHistoryItemProps> = ({ order }) => {
                                 }}
                                 className={styles.ingredient_icon_border}>
                                 <div className={styles.ingredient_icon}>
-                                    <img src={src} alt="Ммм, как вкусно" />
+                                    <img
+                                        src={src}
+                                        style={{
+                                            opacity:
+                                                restCount && index === 0
+                                                    ? 0.6
+                                                    : 1
+                                        }}
+                                        alt="Ммм, как вкусно"
+                                    />
+                                    <div className="text text_type_main-default">
+                                        {restCount && index === 0
+                                            ? `+${restCount}`
+                                            : ''}
+                                    </div>
                                 </div>
                             </div>
                         ))}

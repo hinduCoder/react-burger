@@ -33,11 +33,19 @@
     border-radius: 50%;
     background-color: #131316;
     text-align: center;
+    position: relative;
 }
 
 .ingredient_icon > img {
     height: 56px;
     transform: translate(-25px, 2px);
+}
+
+.ingredient_icon > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .ingredients {

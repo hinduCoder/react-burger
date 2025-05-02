@@ -1,11 +1,16 @@
 import { FC, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import {
+    useAppDispatch,
+    useAppSelector,
+    usePageTitle
+} from '../../utils/hooks';
 import { connect } from '../../services/feed';
 import OrderHistory from '../../components/order-history/order-history';
 import FeedStatistics from '../../components/feed-statistics/feed-statistics';
 import styles from './feed-page.module.css';
 
 const FeedPage: FC = () => {
+    usePageTitle('Лента заказов');
     const orders = useAppSelector(store => store.feed.orders);
     const dispatch = useAppDispatch();
 
@@ -14,7 +19,7 @@ const FeedPage: FC = () => {
     }, [dispatch]);
 
     return (
-        <main>
+        <main className={styles.main}>
             <h1 className={`text text_type_main-large ${styles.header}`}>
                 Лента заказов
             </h1>
