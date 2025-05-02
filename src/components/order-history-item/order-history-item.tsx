@@ -53,11 +53,13 @@ const OrderHistoryItem: FC<OrderHistoryItemProps> = ({ order }) => {
                         {images.toReversed().map((src, index) => (
                             <div
                                 key={index}
-                                className={styles.ingredient_icon}
                                 style={{
                                     transform: `translateX(${-(images.length - 1 - index) * 16}px)`
-                                }}>
-                                <img src={src} alt="Ммм, как вкусно" />
+                                }}
+                                className={styles.ingredient_icon_border}>
+                                <div className={styles.ingredient_icon}>
+                                    <img src={src} alt="Ммм, как вкусно" />
+                                </div>
                             </div>
                         ))}
                     </div>

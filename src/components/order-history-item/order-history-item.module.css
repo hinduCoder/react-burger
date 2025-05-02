@@ -18,26 +18,32 @@
     gap: 24px;
 }
 
-.ingredient_icon {
+.ingredient_icon_border {
     width: 64px;
     height: 64px;
-    box-sizing: border-box;
-    border: 2px solid #4C4CFF;
+    background-image: linear-gradient(to right, #801AB2, #4C4CFF);
+    border-radius: 50%;
+}
+
+.ingredient_icon {
+    width: 60px;
+    height: 60px;
+    box-sizing: content-box;
+    transform: translate(2px, 2px);
     border-radius: 50%;
     background-color: #131316;
     text-align: center;
+}
+
+.ingredient_icon > img {
+    height: 56px;
+    transform: translate(-25px, 2px);
 }
 
 .ingredients {
     display: flex;
     flex-direction: row-reverse;
 }
-
-.ingredient_icon > img {
-    height: 56px;
-    transform: translate(-24px, 4px);
-}
-
 
 .link {
     text-decoration: none;
