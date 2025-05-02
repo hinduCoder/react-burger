@@ -3,13 +3,14 @@ import React, { FC, useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useAppSelector } from '../../utils/hooks';
 import { Order } from '../../utils/types';
+import { Link, useLocation } from 'react-router-dom';
 
 type OrderHistoryItemProps = {
     order: Order;
-    onClick?: (number: number) => void;
 };
 
-const OrderHistoryItem: FC<OrderHistoryItemProps> = ({ order, onClick }) => {
+const OrderHistoryItem: FC<OrderHistoryItemProps> = ({ order }) => {
+    const location = useLocation();
     const ingredients = useAppSelector(store => store.ingredients.list);
 
     const images = useMemo(() => {
@@ -31,39 +32,41 @@ const OrderHistoryItem: FC<OrderHistoryItemProps> = ({ order, onClick }) => {
     );
 
     return (
-        <section
-            className={styles.card}
-            onClick={() => onClick?.(order.number)}>
-            <div className={styles.card_header}>
-                <span className="text text_type_digits-default">
-                    #{order.number}
-                </span>
-                <span className="text text_type_main-default text_color_inactive">
-                    {order.createdAt}
-                </span>
-            </div>
-            <h2 className="mt-6 mb-6 text text_type_main-medium">
-                {order.name}
-            </h2>
-            <div className={styles.short_details}>
-                <div className={styles.ingredients}>
-                    {images.map((src, index) => (
-                        <div
-                            key={index}
-                            className={styles.ingredient_icon}
-                            style={{
-                                transform: `translateX(${-(index * 16)}px)`,
-                                zIndex: 1000 - index
-                            }}>
-                            <img src={src} alt="Ммм, как вкусно" />
-                        </div>
-                    ))}
+        <Link
+            to={order.number.toString()}
+            state={{ background: location }}
+            className={styles.link}>
+            <section className={styles.card}>
+                <div className={styles.card_header}>
+                    <span className="text text_type_digits-default">
+                        #{order.number}
+                    </span>
+                    <span className="text text_type_main-default text_color_inactive">
+                        {order.createdAt}
+                    </span>
                 </div>
-                <span className="text text_type_digits-default">
-                    {sum} <CurrencyIcon type="primary" />
-                </span>
-            </div>
-        </section>
+                <h2 className="mt-6 mb-6 text text_type_main-medium">
+                    {order.name}
+                </h2>
+                <div className={styles.short_details}>
+                    <div className={styles.ingredients}>
+                        {images.toReversed().map((src, index) => (
+                            <div
+                                key={index}
+                                className={styles.ingredient_icon}
+                                style={{
+                                    transform: `translateX(${-(images.length - 1 - index) * 16}px)`
+                                }}>
+                                <img src={src} alt="Ммм, как вкусно" />
+                            </div>
+                        ))}
+                    </div>
+                    <span className="text text_type_digits-default">
+                        {sum} <CurrencyIcon type="primary" />
+                    </span>
+                </div>
+            </section>
+        </Link>
     );
 };
 

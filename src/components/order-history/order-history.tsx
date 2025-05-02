@@ -5,18 +5,13 @@ import { Order } from '../../utils/types';
 
 type TOrderHistoryProps = {
     orders: ReadonlyArray<Order>;
-    onItemClick?: (number: number) => void;
 };
 
-const OrderHistory: FC<TOrderHistoryProps> = ({ orders, onItemClick }) => {
+const OrderHistory: FC<TOrderHistoryProps> = ({ orders }) => {
     return (
         <section className={`${styles.history} pl-2 pr-2`}>
             {orders?.map(order => (
-                <OrderHistoryItem
-                    key={order._id}
-                    order={order}
-                    onClick={onItemClick}
-                />
+                <OrderHistoryItem key={order._id} order={order} />
             ))}
         </section>
     );

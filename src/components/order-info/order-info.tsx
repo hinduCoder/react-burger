@@ -1,7 +1,7 @@
 import { Order, OrderStatus } from '../../utils/types';
 import { FC, useMemo } from 'react';
 import styles from './order-info.module.css';
-import { useAppSelector } from '../../utils/hooks';
+import { useAppSelector, usePageTitle } from '../../utils/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 type TOrderInfoProps = {
@@ -15,6 +15,8 @@ const statusDisplayNames: Record<OrderStatus, string> = {
 };
 
 const OrderInfo: FC<TOrderInfoProps> = ({ order }) => {
+    usePageTitle('Информация о заказе');
+
     const ingredients = useAppSelector(store => store.ingredients.list);
 
     const orderIngredients = useMemo(() => {

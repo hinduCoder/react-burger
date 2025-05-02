@@ -123,6 +123,22 @@ function App() {
                             </Modal>
                         }
                     />
+                    <Route
+                        path="/feed/:number"
+                        element={
+                            <Modal onClose={() => navigate(-1)}>
+                                <OrderInfoWrapper />
+                            </Modal>
+                        }
+                    />
+                    <Route
+                        path="/profile/orders/:number"
+                        element={
+                            <Modal onClose={() => navigate(-1)}>
+                                <OrderInfoWrapper />
+                            </Modal>
+                        }
+                    />
                 </Routes>
             )}
         </div>
