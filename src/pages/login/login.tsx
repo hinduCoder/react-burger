@@ -41,11 +41,13 @@ const LoginPage = () => {
                 <h2 className="text text_type_main-medium">Вход</h2>
                 <form onSubmit={submit}>
                     <EmailInput
+                        name="email"
                         extraClass="mt-6"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
                     <PasswordInput
+                        name="password"
                         extraClass="mt-6"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
