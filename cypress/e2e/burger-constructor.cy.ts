@@ -1,4 +1,38 @@
+import {
+    LoginApiResponse,
+    OrderApiResponse,
+    UserResponse
+} from '../../src/utils/types';
+import { testIngredients } from './test-data';
+
 describe('Burger constructor', () => {
+    beforeEach(() => {
+        cy.intercept('GET', '/api/ingredients', {
+            body: {
+                success: true,
+                data: testIngredients
+            }
+        });
+        cy.intercept('POST', '/api/auth/login', {
+            body: {
+                success: true,
+                user: { name: 'Антон', email: 'antngribv@yandex.ru' },
+                accessToken: 'access',
+                refreshToken: 'refresh'
+            } as LoginApiResponse
+        });
+        cy.intercept('GET', 'api/auth/user', {
+            statusCode: 403
+        });
+        cy.intercept('POST', '/api/orders', {
+            body: {
+                success: true,
+                order: {
+                    number: 12345
+                }
+            } as OrderApiResponse
+        }).as('postOrder');
+    });
     it('opens constructor', () => {
         cy.visit('http://localhost:3000');
         cy.contains('Соберите бургер');
@@ -7,7 +41,7 @@ describe('Burger constructor', () => {
     it('opens ingredient detail modal', () => {
         cy.visit('http://localhost:3000');
         cy.get('[class^=ingredient-card_ingredient_card__]')
-            .eq(5)
+            .eq(2)
             .as('ingredient');
 
         cy.get('@ingredient').then(card => {
@@ -66,7 +100,7 @@ describe('Burger constructor', () => {
         cy.url().should('include', '/login');
 
         cy.get('input[name=email]').type('antngribv@yandex.ru');
-        cy.get('input[name=password]').type('mvD_hidBd-Zska3');
+        cy.get('input[name=password]').type('123456');
 
         cy.get('button').should('have.text', 'Войти').click();
 
@@ -74,9 +108,8 @@ describe('Burger constructor', () => {
 
         cy.get('@constructor').find('button').click();
 
-        cy.intercept('POST', '/api/orders').as('postOrder');
-
         cy.wait('@postOrder');
-        cy.contains('Ваш заказ начали готовить');
+        cy.get('#modal').should('contain', 'Ваш заказ начали готовить');
+        cy.get('#modal').should('contain', '12345');
     });
 });
