@@ -5,7 +5,6 @@ import {
 import { moveFilling, removeFilling } from '../../services/burger-constructor';
 import styles from './burger-constructor-item.module.css';
 import { useDrag, useDrop } from 'react-dnd';
-import { decrementCount } from '../../services/ingredients';
 import { useAppDispatch } from '../../utils/hooks';
 import { Ingredient } from '../../utils/types';
 import { FC } from 'react';
@@ -51,7 +50,6 @@ const BurgerConstructorItem: FC<BurgerConstructorItemProps> = ({ item }) => {
 
     const removeIngredient = (item: Ingredient) => {
         dispatch(removeFilling(item.localId!));
-        dispatch(decrementCount(item._id));
     };
     return (
         <div
