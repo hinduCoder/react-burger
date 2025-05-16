@@ -34,12 +34,12 @@ describe('Burger constructor', () => {
         }).as('postOrder');
     });
     it('opens constructor', () => {
-        cy.visit('http://localhost:3000');
+        cy.visit('');
         cy.contains('Соберите бургер');
     });
 
     it('opens ingredient detail modal', () => {
-        cy.visit('http://localhost:3000');
+        cy.visit('');
         cy.get('[class^=ingredient-card_ingredient_card__]')
             .eq(2)
             .as('ingredient');
@@ -63,7 +63,7 @@ describe('Burger constructor', () => {
     });
 
     it('creates an order', () => {
-        cy.visit('http://localhost:3000');
+        cy.visit('');
 
         cy.get('[class^=burger-ingredients_ingredients_list__]').as(
             'ingredient_list'
