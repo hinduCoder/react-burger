@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Order } from '../utils/types';
+import { Order, OrderHistoryResponse } from '../utils/types';
 
 const slice = createSlice({
     name: 'orderHistory',
@@ -12,7 +12,7 @@ const slice = createSlice({
         onClose(state) {},
         onError(state) {},
         sendMessage(state) {},
-        onMessage(state, action: PayloadAction<{ orders: Array<Order> }>) {
+        onMessage(state, action: PayloadAction<OrderHistoryResponse>) {
             state.orders = action.payload.orders;
         }
     }

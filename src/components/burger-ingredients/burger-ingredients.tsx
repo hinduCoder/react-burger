@@ -69,7 +69,8 @@ const BurgerIngredients = () => {
             </nav>
             <section
                 className={styles.ingredients_list}
-                onScroll={onListScroll}>
+                onScroll={onListScroll}
+                data-cy="ingredients_list">
                 {ingredientTypes.map(ingredientType => (
                     <div
                         key={ingredientType.type}

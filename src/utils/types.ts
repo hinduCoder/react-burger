@@ -11,7 +11,6 @@ export type Ingredient = {
     fat: number;
     carbohydrates: number;
     calories: number;
-    count: number;
 };
 
 export type IngredientType = 'bun' | 'main' | 'sauce';

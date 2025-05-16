@@ -10,11 +10,6 @@ import { useDrop } from 'react-dnd';
 import { addFilling, clear, setBun } from '../../services/burger-constructor';
 import { closeOrderInfo, makeOrder } from '../../services/order';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
-import {
-    clearCounters,
-    decrementCount,
-    incrementCount
-} from '../../services/ingredients';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 import { Ingredient } from '../../utils/types';
@@ -31,14 +26,10 @@ const BurgerConstructor = () => {
         accept: 'ingredient',
         drop({ ingredient }) {
             if (ingredient.type === 'bun') {
-                if (bun) {
-                    dispatch(decrementCount(bun._id));
-                }
                 dispatch(setBun(ingredient));
             } else {
                 dispatch(addFilling(ingredient));
             }
-            dispatch(incrementCount(ingredient._id));
         }
     });
     const sum =
@@ -54,14 +45,14 @@ const BurgerConstructor = () => {
             .unwrap()
             .then(() => {
                 dispatch(clear());
-                dispatch(clearCounters());
             });
     };
 
     return (
         <section
             ref={element => void dropTarget(element)}
-            className={styles.burger_constructor}>
+            className={styles.burger_constructor}
+            data-cy="burger_constructor">
             <div>
                 {bun && (
                     <ConstructorElement

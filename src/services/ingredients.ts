@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiRequest, ingredientsApiPath } from '../utils/api';
 import { Ingredient, IngredientsApiResponse } from '../utils/types';
 
@@ -12,30 +12,13 @@ const slice = createSlice({
     initialState: {
         list: [] as Array<Ingredient>
     },
-    reducers: {
-        incrementCount(state, action: PayloadAction<string>) {
-            const ingredient = state.list.find(
-                ingredient => ingredient._id === action.payload
-            );
-            ingredient && ingredient.count++;
-        },
-        decrementCount(state, action: PayloadAction<string>) {
-            const ingredient = state.list.find(
-                ingredient => ingredient._id === action.payload
-            );
-            ingredient && ingredient.count--;
-        },
-        clearCounters(state) {
-            state.list.forEach(ingredient => (ingredient.count = 0));
-        }
-    },
+    reducers: {},
     extraReducers: builder => {
         builder.addCase(loadData.pending, state => {
             state.list = [];
         });
         builder.addCase(loadData.fulfilled, (state, action) => {
             state.list = action.payload;
-            state.list.forEach(ingredient => (ingredient.count = 0));
         });
         builder.addCase(loadData.rejected, (state, action) => {
             alert('Не удалось загрузить данные');
@@ -45,5 +28,4 @@ const slice = createSlice({
 });
 
 export { loadData };
-export const { incrementCount, decrementCount, clearCounters } = slice.actions;
 export default slice.reducer;
