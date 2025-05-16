@@ -38,7 +38,8 @@ const IngredientCard: FC<IngredientCardProps> = ({ ingredient }) => {
             className={styles.link}>
             <div
                 ref={element => void dragTarget(element)}
-                className={styles.ingredient_card}>
+                className={styles.ingredient_card}
+                data-cy="ingredient_card">
                 {count ? <Counter count={count} /> : null}
                 <img
                     alt={`Ингредиент для бургера: ${name}`}

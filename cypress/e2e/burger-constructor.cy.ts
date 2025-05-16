@@ -6,6 +6,9 @@ import {
 import { testIngredients } from './test-data';
 
 describe('Burger constructor', () => {
+    const modalSelector = '#modal';
+    const ingredientCardDataSelector = 'ingredient_card';
+
     beforeEach(() => {
         cy.intercept('GET', '/api/ingredients', {
             body: {
@@ -40,9 +43,7 @@ describe('Burger constructor', () => {
 
     it('opens ingredient detail modal', () => {
         cy.visit('');
-        cy.get('[class^=ingredient-card_ingredient_card__]')
-            .eq(2)
-            .as('ingredient');
+        cy.getByCyData(ingredientCardDataSelector).eq(2).as('ingredient');
 
         cy.get('@ingredient').then(card => {
             const text = card.children().last().text();
@@ -50,7 +51,7 @@ describe('Burger constructor', () => {
 
             cy.url().should('include', '/ingredient');
 
-            cy.get('#modal').should('contain.text', text);
+            cy.get(modalSelector).should('contain.text', text);
         });
 
         cy.contains('Детали ингредиента');
@@ -59,35 +60,31 @@ describe('Burger constructor', () => {
 
         cy.url().should('not.include', '/ingredient');
         cy.contains('Детали ингредиента').should('not.exist');
-        cy.get('#modal').should('be.empty');
+        cy.get(modalSelector).should('be.empty');
     });
 
     it('creates an order', () => {
         cy.visit('');
 
-        cy.get('[class^=burger-ingredients_ingredients_list__]').as(
-            'ingredient_list'
-        );
-        cy.get('[class^=burger-constructor_burger_constructor__]').as(
-            'constructor'
-        );
+        cy.getByCyData('ingredients_list').as('ingredient_list');
+        cy.getByCyData('burger_constructor').as('constructor');
 
         cy.get('@ingredient_list')
-            .find(
-                '>div:nth-child(1) [class^=ingredient-card_ingredient_card__]'
-            )
+            .children()
+            .eq(0)
+            .findByCyData(ingredientCardDataSelector)
             .first()
             .as('bun');
         cy.get('@ingredient_list')
-            .find(
-                '>div:nth-child(2) [class^=ingredient-card_ingredient_card__]'
-            )
+            .children()
+            .eq(1)
+            .findByCyData(ingredientCardDataSelector)
             .first()
             .as('sauce');
         cy.get('@ingredient_list')
-            .find(
-                '>div:nth-child(3) [class^=ingredient-card_ingredient_card__]'
-            )
+            .children()
+            .eq(2)
+            .findByCyData(ingredientCardDataSelector)
             .first()
             .as('main');
 
@@ -99,8 +96,8 @@ describe('Burger constructor', () => {
 
         cy.url().should('include', '/login');
 
-        cy.get('input[name=email]').type('antngribv@yandex.ru');
-        cy.get('input[name=password]').type('123456');
+        cy.getByCyData('email_input').type('antngribv@yandex.ru');
+        cy.getByCyData('password_input').type('123456');
 
         cy.get('button').should('have.text', 'Войти').click();
 
@@ -109,7 +106,7 @@ describe('Burger constructor', () => {
         cy.get('@constructor').find('button').click();
 
         cy.wait('@postOrder');
-        cy.get('#modal').should('contain', 'Ваш заказ начали готовить');
-        cy.get('#modal').should('contain', '12345');
+        cy.get(modalSelector).should('contain', 'Ваш заказ начали готовить');
+        cy.get(modalSelector).should('contain', '12345');
     });
 });

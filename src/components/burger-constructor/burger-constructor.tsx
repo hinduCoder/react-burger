@@ -51,7 +51,8 @@ const BurgerConstructor = () => {
     return (
         <section
             ref={element => void dropTarget(element)}
-            className={styles.burger_constructor}>
+            className={styles.burger_constructor}
+            data-cy="burger_constructor">
             <div>
                 {bun && (
                     <ConstructorElement

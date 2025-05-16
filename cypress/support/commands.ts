@@ -37,3 +37,29 @@
 // }
 
 import '@4tw/cypress-drag-drop';
+
+Cypress.Commands.add('getByCyData', (s, ...args) => {
+    return cy.get(`[data-cy=${s}]`, ...args);
+});
+Cypress.Commands.add(
+    'findByCyData',
+    { prevSubject: 'element' },
+    (subject, s, ...args) => {
+        return cy.wrap(subject).find(`[data-cy=${s}]`, ...args);
+    }
+);
+
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            getByCyData(
+                s: string,
+                ...args: any
+            ): Cypress.Chainable<JQuery<HTMLElement>>;
+            findByCyData(
+                s: string,
+                ...args: any
+            ): Cypress.Chainable<JQuery<HTMLElement>>;
+        }
+    }
+}

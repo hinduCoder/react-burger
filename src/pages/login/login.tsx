@@ -42,12 +42,14 @@ const LoginPage = () => {
                 <form onSubmit={submit}>
                     <EmailInput
                         name="email"
+                        data-cy="email_input"
                         extraClass="mt-6"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
                     <PasswordInput
                         name="password"
+                        data-cy="password_input"
                         extraClass="mt-6"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
